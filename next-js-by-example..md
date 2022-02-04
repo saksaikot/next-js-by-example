@@ -116,3 +116,27 @@ Inside this Link component we can use other component as well,
 
 We have a navbar in `index` page and we want the same navbar in every page. so we need to make a navbar component so we can reuse it. If we make the component inside `pages` folder then it will expose to url automatically. But we don't want this. So we move it to outside `pages` folder. A good practice is to keep our components in `components` folder which is under root of our project.
 So inside components folder we can keep any our components.
+
+## 004 Custom App component
+
+We can already see that both the home page and the about page have some common structure. In next-js we can use a special page as a page template which can be used as template and this page will be called every time a page is requested. This special page is named `_app.js`, and it start with a `_`.The basic structure of this page is
+
+```jsx
+export default function _app({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+The app function will take `Component` and `pageProps` as argument,for about page the about.jsx will be its `Component` and its props will the `pageProps` and then we need to render it. we can add any additional component we need. here we can make it like a template. Before we can see the changes we need to restart our dev server. This is one of few case where hot refresh will not work.If we put a console.log then we can see that the `_app.jsx` is called before the page.Now we can move the header section here, so that every page can automatically include the header. This means we don't need any header section in the pages any more, and for any new page it will be automatically included.
+now the `_app.jsx` will look like this
+
+```jsx
+return (
+  <>
+    <header>
+      <NavBar />
+    </header>
+    <Component {...pageProps} />
+  </>
+);
+```
