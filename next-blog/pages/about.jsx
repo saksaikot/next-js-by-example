@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 
 export default function AboutPage() {
@@ -5,6 +6,9 @@ export default function AboutPage() {
 
   return (
     <>
+      <Head>
+        <title>About - My Blog</title>
+      </Head>
       <main>
         <h2>About page</h2>
       </main>

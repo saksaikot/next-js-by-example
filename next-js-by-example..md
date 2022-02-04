@@ -140,3 +140,7 @@ return (
   </>
 );
 ```
+
+## 005. Next Head Component
+
+For every page there is title, description and other meta tags. Luckily there is a way in next-js that we can add these information inside our component, and next-js will automatically update it based on the page. the component is `Head`, we can add this anywhere to apply it to header.
