@@ -16,6 +16,14 @@ export default function NavBar() {
           </Link>
         </li>
       </ul>
+      <style jsx>{`
+        ul {
+          list-style: none;
+          display: flex;
+          gap: 1rem;
+          padding: 0;
+        }
+      `}</style>
     </nav>
   );
 }

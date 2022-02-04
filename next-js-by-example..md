@@ -150,3 +150,19 @@ For every page there is title, description and other meta tags. Luckily there is
 ## 001. Global styles
 
 We can simply add a css file into `_app.js` to import our css, we can also import as many css files we want. we simply styled the nav.
+
+## 002. Component Styles with styled jsx
+
+In global css we can write styles for simple one or two pages. If the project is bigger than writing it in single files can be difficult, in next-js we can write the css in the component, so that the style is not applied in other part and can be easily maintained.to write style in next-js we add a style component with jsx attribute, the css is within `{}`and using text literal ie:
+
+```jsx
+<style jsx>{`
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+`}</style>
+```
+
+and we can use any styled component that supported by react.
