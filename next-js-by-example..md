@@ -49,3 +49,33 @@ All codes are in github repository [next blog](https://github.com/mirkonasato/ne
 ## 005. pre-rendering
 
 In react the html page that loaded by the browser, only has a div with id root,ie`<div id="root"></div>`. the contents are loaded when the js is executed. So without the js there will be no content.But in next-js with the help of pre-rendering the content is already included in the html file, most of the time, ie`<div>hello world</div>`. with this the page render faster, it also help seo, search engin optimization which helps in search rank as well.
+
+## 006 . Development vs production
+
+If we put a console log in our index page `console.log('[Index page] function called')` we will see that this is get printed both in browser console and the terminal console.this is because when the browser request the page the server first render the file and then it send the file to browser then its again executed.Though this two time rendering is happening because of dev mode also to reflect with latest changes. If it is running under the production mode than there may be only client side rendering.there are times when server side rendering can happen in production mode.
+
+### Production mode
+
+first we need to build the app, `npx next build` then we need to start it `npx next start`. we can add these commands to package.json
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+```
+
+When we run `npm run build` we will see some outputs:
+`Generating static pages` where we will find our `console.log` is printed.The list of pages, in our case the root and 404 pages. in front of pages there is a circle without filled up or same as `o`. Which meant that it is a static page.there are other page type,
+
+- λ, this page are rendered at server runtime(uses `getInitialProps` or `getServerSideProps` )
+- o , static page build at runtime
+- ● , filled circle,
+  - (SSG, server side generated)automatically generated page at build time , uses getStaticProps
+  - (ISR, Incremental Server Regeneration), uses revalidate in getStaticProps.
+
+Then start it with next.`npm run start`, at this time the `console.log` only happening on client side not server side.because the page is already rendered and exported as static page.
+The build page can be found in `project-root->.next->server->pages->` folder
