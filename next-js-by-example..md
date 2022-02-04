@@ -176,3 +176,9 @@ We can put our static assets or files under `public` folder, it will serve as it
   <link rel="icon" href="icons/favicon.ico" />
 </Head>
 ```
+
+# 04 Loading Data
+
+## 001. First post page
+
+added ul linked list of blog post in home page, created `posts/first-post.jsx`.
