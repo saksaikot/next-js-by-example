@@ -98,3 +98,16 @@ next-js uses filesystem based router.It scan the pages folder to get the urls. i
 
 But next uses built in router which is simple and strait-forward.
 Now we can create the about page, which is simple react component.
+
+## 002. Next link component
+
+now we will add a navbar to have links of our page. We can use `a` tag to link, but then we will loose the client side rendering. we can verify that by looking in browser development tools ->network->doc, we will see that the new page is loading from the server. To have the client side rendering next-js has a link component, to use the Link component we need to wrap our `a` tag into `Link` component and move the `href` to `Link`.ie:
+
+```jsx
+
+<a href="/about">about</a>
+// to
+<Link href="/about"><a>about</a></Link>
+```
+
+Inside this Link component we can use other component as well,
