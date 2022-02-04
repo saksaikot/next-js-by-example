@@ -1,5 +1,7 @@
 # Next js by example - Mirko Nasato
 
+# 01 Getting Started
+
 ## 001. Next blog - overview
 
 Overview talks about the things it wll cover -
@@ -79,3 +81,20 @@ When we run `npm run build` we will see some outputs:
 
 Then start it with next.`npm run start`, at this time the `console.log` only happening on client side not server side.because the page is already rendered and exported as static page.
 The build page can be found in `project-root->.next->server->pages->` folder
+
+# 02 Routing and Navigation
+
+## 001. Adding new pages
+
+next-js uses filesystem based router.It scan the pages folder to get the urls. ie: it expose `about.js` as `localhost:3000/about` url, and subfolder will add deeper or folder path to url as well, `pages->more->about.js` will be `localhost:3000/more/about`. We know that react uses react-router which will uses like this
+
+```jsx
+<Switch>
+  <Route path="/about">
+    <About />
+  </Route>
+</Switch>
+```
+
+But next uses built in router which is simple and strait-forward.
+Now we can create the about page, which is simple react component.
