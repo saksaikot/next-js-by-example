@@ -182,3 +182,9 @@ We can put our static assets or files under `public` folder, it will serve as it
 ## 001. First post page
 
 added ul linked list of blog post in home page, created `posts/first-post.jsx`.
+
+## 002. Markdown Syntax
+
+we can store our post files in a markdown file. markdown files have .md extension.
+to add a header we start with # then after a space we can write our header `# this is my post header`. to have paragraph just simply write the text. to have bold text `__Bold-Text__` write the text between`__ __` or `** **`, to have a list start the line with a `*`.
+created our post markdown file `first-post.md` under `contents` folder
