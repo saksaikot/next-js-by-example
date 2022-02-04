@@ -111,3 +111,8 @@ now we will add a navbar to have links of our page. We can use `a` tag to link, 
 ```
 
 Inside this Link component we can use other component as well,
+
+## Shared NavBar Component
+
+We have a navbar in `index` page and we want the same navbar in every page. so we need to make a navbar component so we can reuse it. If we make the component inside `pages` folder then it will expose to url automatically. But we don't want this. So we move it to outside `pages` folder. A good practice is to keep our components in `components` folder which is under root of our project.
+So inside components folder we can keep any our components.
