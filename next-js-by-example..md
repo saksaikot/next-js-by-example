@@ -166,3 +166,13 @@ In global css we can write styles for simple one or two pages. If the project is
 ```
 
 and we can use any styled component that supported by react.
+
+## 003. Images and other Assets
+
+We can put our static assets or files under `public` folder, it will serve as it is. we can put here our images, files. To complete the tutorial we will add a robots.txt and a favicon file. robots.txt to tell search engin to allow all files, and the favicon for the site icon. We can add the icon in `head` section of `_app` page.ie:
+
+```jsx
+<Head>
+  <link rel="icon" href="icons/favicon.ico" />
+</Head>
+```
