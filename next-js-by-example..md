@@ -45,3 +45,7 @@ Overview talks about the things it wll cover -
 ## 004 Source code
 
 All codes are in github repository [next blog](https://github.com/mirkonasato/next-blog).all the videos are committed there. to view the commits there is a link under code download button. to view the changes you need to visit the commit link named by the video file. In this next-blog there will file up to section 6. to view the code with file you need to visit the commit and then from top right there is a link of `Browse files` to see the files at that point.teacher also talks about the q/a section of udemy but this is not the scope here.
+
+## 005. pre-rendering
+
+In react the html page that loaded by the browser, only has a div with id root,ie`<div id="root"></div>`. the contents are loaded when the js is executed. So without the js there will be no content.But in next-js with the help of pre-rendering the content is already included in the html file, most of the time, ie`<div>hello world</div>`. with this the page render faster, it also help seo, search engin optimization which helps in search rank as well.
