@@ -24,7 +24,7 @@ export default function FirstPostPage({ title, body }) {
       </Head>
       <main>
         <h2>{title}</h2>
-        <p>{body}</p>
+        <article dangerouslySetInnerHTML={{ __html: body }} />
       </main>
     </>
   );

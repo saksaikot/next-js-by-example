@@ -256,3 +256,35 @@ export async function getPost(slug) {
 ```
 
 so in `first-post.jsx` we simply import the getPost function and use it as required.
+
+## 007 Rendering Markdown
+
+To convert the markdown to html we can use the library marked, then we can simply use it like this
+
+```js
+import { marked } from "marked";
+const html = marked(`# header`);
+```
+
+`html` will have the html version of the given markdown file
+
+```html
+<h1 id="header">header</h1>
+```
+
+In the latest marked library the `marked` is not the default export so we need to destructure it.
+Since we can convert markdown to html we can now convert out `.md` to html, but this is single file and for now we don't have the title, we can simply send the body, and leave the title for now.
+But if we see the post all out html is scaped. because it is inside a `p` tag.to pass html we need to follow special procedure. Because passing html directly have a security issue, anyone can add `script` tag to harm the site, but since it came from our markdown file, we know that we can use it.to use the html we need to set a property and pass the value like this,
+
+```jsx
+<Component dangerouslySetInnerHTML={{ __html: value }} />
+```
+
+The process is complicated.
+Now we can use it to parse the html. We will use `article` instead of `p` since it have other html tags and also it uses the semantic html.
+
+```jsx
+<article dangerouslySerInnerHTML={{ __html: body }} />
+```
+
+Now we can see our first post parsed our html.
