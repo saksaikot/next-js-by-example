@@ -229,3 +229,30 @@ If we run the app we will see that the getStaticProps are no longer running in s
 
 Since `getStaticProps` is server side function and its run by node, we can use the node to access file of our app.we can use the `fs` filesystem module of node to access the file.we will use the promise variant.And load a json file for simplicity.
 first we import the readFile from fs/promises `import {readFile} from "fs/promises"` then use the readFile function to load the file. `const data=await readFile(file_location,'utf-8')`, here is a note that, the file location is not relative is from the project root, ie `../../contents/posts/first-post.json` will not work but `contents/posts/first-post.json` will work. then simply we parse the json and send it as props.then we can verify in our browser that the post is came from the json file.
+
+## 006. lib module
+
+Lets refactor our code of getting the post data. we made a async getPost function which receive a `slug`, a `slug` is a part of url which identify specific data. our getPost function is like -
+
+```js
+async function getPost(slug) {
+  const data = await readFile(`contents/posts/${slug}.json`, "utf-8");
+
+  return JSON.parse(data);
+}
+```
+
+Now we can move the getPost function to other place, since the post page is not concern how the post data is collected. A common approach is to move this type of code under lib folder so we can separate logic of concern.
+now our posts.js file under lib is
+
+```js
+import { readFile } from "fs/promises";
+
+export async function getPost(slug) {
+  const data = await readFile(`contents/posts/${slug}.json`, "utf-8");
+
+  return JSON.parse(data);
+}
+```
+
+so in `first-post.jsx` we simply import the getPost function and use it as required.
