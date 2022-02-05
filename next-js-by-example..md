@@ -188,3 +188,33 @@ added ul linked list of blog post in home page, created `posts/first-post.jsx`.
 we can store our post files in a markdown file. markdown files have .md extension.
 to add a header we start with # then after a space we can write our header `# this is my post header`. to have paragraph just simply write the text. to have bold text `__Bold-Text__` write the text between`__ __` or `** **`, to have a list start the line with a `*`.
 created our post markdown file `first-post.md` under `contents` folder
+
+## 003. getStaticProps Function
+
+we can receive props in our component, if we log the props in our post page we will see that the props is empty, cause in a sense it is a top level component. But we can pass props in next.js, to pass props we need build a `async` function called getStaticProps, we need to export the function as well, we can simple return an object then it will be available in the `props` of the component.The return object must return the value inside props key,ie
+
+```js
+export async function getStaticProps() {
+  return {
+    props: {
+      prop1: "value1",
+      prop2: "value2",
+    },
+  };
+}
+```
+
+Now that we can pass props we can pass our title and the body as props. example
+
+```js
+export async function getStaticProps() {
+  return {
+    props: {
+      title: "My First Post",
+      body: "My first paragraph from getStaticProps",
+    },
+  };
+}
+```
+
+now we can use it in our component, like `<title>{title}</title>`, here title is destructured.
