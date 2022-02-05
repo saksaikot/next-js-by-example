@@ -76,7 +76,7 @@ When we run `npm run build` we will see some outputs:
 - λ, this page are rendered at server runtime(uses `getInitialProps` or `getServerSideProps` )
 - o , static page build at runtime
 - ● , filled circle,
-  - (SSG, server side generated)automatically generated page at build time , uses getStaticProps
+  - (SSG, server side generated)automatically generated page at build time , uses getStaticProps + json data
   - (ISR, Incremental Server Regeneration), uses revalidate in getStaticProps.
 
 Then start it with next.`npm run start`, at this time the `console.log` only happening on client side not server side.because the page is already rendered and exported as static page.
@@ -218,3 +218,9 @@ export async function getStaticProps() {
 ```
 
 now we can use it in our component, like `<title>{title}</title>`, here title is destructured.
+
+## 004 getStaticProps in Production Mode
+
+If we place a console log inside getStaticProps function then we can see that it is called only server side not client side.And this is little bit mix and complex that some codes of same file run only server side and some in client side.next-js doing this in cleaver way and keeping the logic in same page.this getStaticProps is called in the build time and it creates the `ssg` server side static generation including a props json file. this ssg will rendered and will include the content ready, along with this, it will also generate a props json file, which will then use to get the props from client side when we navigate from browser. ie: from home page to post page, it will simply get the json props to render the page and not the whole page.If we build our app then we will see that while building our post page, the getStaticProps called and this page is marked as filled circle which means it generated the static page along with the props json.
+![1](/screen-shots/004%20getStaticProps%20in%20Production%20Mode__1.jpg)
+If we run the app we will see that the getStaticProps are no longer running in server-side because its already build the static page. But when it run in dev mode to reflect the latest change it call getStaticProps every time .
