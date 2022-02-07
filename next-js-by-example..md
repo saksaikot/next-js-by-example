@@ -415,3 +415,23 @@ if we run `typeof localStorage` in browser it will return `object`, in node it w
 after adding this checking our app running normally, but in console we can see a warning. it is telling that the text of button is not matched, ie: at server side the button text is 'Dark Theme' but at client side, the text is based on user preference.This is useful feature that next is telling that something may be wrong, also it is happening at hydration stage, it checking the server rendered document is same in client rendered.
 
 Since it is our preferred solution, and we can scape the warning by giving the button element this attribute,`suppressHydrationWarning`. It will solve our problem.
+
+# 06 Deployment
+
+## 001 Deployment Options
+
+There can be two type of next-js app,
+
+1. Only static and SSG(Server Side Static Generation). without ISR and server side rendering.
+2. With ISR (Incremental Server Regeneration), or server side rendering
+
+For option 1 we can host anywhere as static site.
+For option 2. we need a server that support node-js or has support for next-js
+
+1. serverless next-js support-
+   - vercel
+   - netlify
+2. own managed server with node, ie: cloud computing server where you can setup node-js
+3. or serverless node supported platform, ie: aws
+
+**for the other part I already did, so I'm skipping**
