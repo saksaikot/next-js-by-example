@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import { marked } from "marked";
 import matter from "gray-matter";
 export async function getPost(slug) {
@@ -10,4 +10,12 @@ export async function getPost(slug) {
   const body = marked(content);
   // console.log({ title, date, body });
   return { title, body, date };
+}
+
+export async function getSlugs() {
+  const extension = ".md";
+  const files = await readdir("contents/posts/");
+  return files
+    .filter((file) => file.endsWith(extension))
+    .map((filename) => filename.slice(0, -extension.length));
 }

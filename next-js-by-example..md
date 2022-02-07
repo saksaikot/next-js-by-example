@@ -323,7 +323,8 @@ Lets create another markdown post.Then in posts pages we need to create a new `s
 }
 ```
 
-again the getStaticPath need to be async and exported.
+Again the getStaticPath need to be async and exported.
+
 Along with the paths property we need to also provide the `fallback` property, the fallback property wii tell what action need to take in case paths are not matched, in our case we want to set fallback as false, ie `fallback:false`, meaning in case we don't have a valid path then show the 404 error message. next-js also provide feature to make the page on-demand if requested page is not found.when we use the `getStaticPaths` our `getStaticProps` can receive the data from the `getStaticPaths` we call it context.If we update the `getStaticProps` to receive the context and log it,we will see this log-
 
 ```txt
@@ -335,4 +336,11 @@ Along with the paths property we need to also provide the `fallback` property, t
 }
 ```
 
-Here we can see that the context has a params property and inside it slug property, but we need only this slug so we can destructure it at parameter section,ie:`{params:{slug}}`, using this slug we can pass it to `getPost` method to get the post by the url. now we can see the first post and the second post manually entering the url `localhost:3000/post/second-post`, because we did not setup second post link. but we can see that all are working as expected.
+Here we can see that the context has a params property and inside it slug property, but we need only this slug so we can destructure it at parameter section,ie:`{params:{slug}}`, using this slug we can pass it to `getPost` method to get the post by the url. now we can see the first post from home page link and the second post manually entering the url `localhost:3000/post/second-post`, because we did not setup second post link. but we can see that all are working as expected.
+
+## 010. Listing files in a folder
+
+In getStaticPaths we are manually providing the path or slug, and if we add a third-post.md then again we need add it manually, we can see that the slug array is the files in the `content/posts` folder, so if we can make a list from this files then we don't need to manually enter each slug. we can do this by reading the dir files using `readdir` method of node fs module. first we get all files and filter the files that endsWith `.md` then we need to remove the extension. so we can make a function `getSlugs` to get an array of all slugs.
+
+And in the post page we can use it in getStaticPaths to generate the list of path.Since the `getSlugs` method is returning slugs as array, we can map through it can generate the `params` of `slug` array.
+After we can see that we can access the third-post page, though we need to enter the url manually. and with this approach we just add the markdown file of our post and it simply added to our `getStaticPaths` function.
