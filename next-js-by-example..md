@@ -396,3 +396,12 @@ since we have the light and dark theme ready and we are applying the light theme
 ## 004. Hydration
 
 In dev mode our app is rendered twice,means both on server and client.But this is not happen for most of the time when the app is build.Unlike react, next-js have most of the component with the html file. and to make the react part working they do not call `ReactDom.render()` directly, instead they use a method `hydration`,ie `ReactDom.hydrate()`. with this the html component get attached to react and then it work like react.
+
+## 005. Saving preference to local storage
+
+As far now we can switch theme, but as soon refresh the page theme go back to default light.So our choice is not persistent.To make our choice persistent we can use localStorage to save our preference.
+But if we use localStorage, we can save data to localStorage as usual but when we try to save it, then it will show error that localStorage not defined. We can save the data but when getting the data it is showing not defined. this is because some of our code run in server side and some in client side. on server side the `onClick` function is not executed, that why the saving data is working, since is it running inside browser and browser have localStorage. But when retrieving the value at server side, node does not have a localStorage, thats why it is giving the undefined error. so we need to careful about the nature of next-js.
+
+**Note: for the hot refresh feature the first render will happen only at client side, but after reload it will first rendered at server side.**
+
+this undefined problem will be solved in next lecture.
