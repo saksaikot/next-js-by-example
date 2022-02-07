@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import DarkTheme from "./DarkTheme";
 function loadDarkMode() {
+  if (typeof localStorage === "undefined") {
+    return false;
+  }
   const darkMode = localStorage.getItem("darkTheme");
   return darkMode ? JSON.parse(darkMode) : false;
 }
@@ -15,7 +18,9 @@ export default function ThemeSwitch() {
   };
   return (
     <>
-      <button onClick={handleButtonClick}>{buttonText}</button>
+      <button onClick={handleButtonClick} suppressHydrationWarning>
+        {buttonText}
+      </button>
       <style jsx>
         {`
           button {

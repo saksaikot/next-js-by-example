@@ -405,3 +405,13 @@ But if we use localStorage, we can save data to localStorage as usual but when w
 **Note: for the hot refresh feature the first render will happen only at client side, but after reload it will first rendered at server side.**
 
 this undefined problem will be solved in next lecture.
+
+## 006. Feature detection
+
+if we run `typeof localStorage` in browser it will return `object`, in node it will return `undefined` so we can check if a feature is undefined then it is running inside server, so change the code accordingly.
+
+**Note: typeof name, return string value**
+
+after adding this checking our app running normally, but in console we can see a warning. it is telling that the text of button is not matched, ie: at server side the button text is 'Dark Theme' but at client side, the text is based on user preference.This is useful feature that next is telling that something may be wrong, also it is happening at hydration stage, it checking the server rendered document is same in client rendered.
+
+Since it is our preferred solution, and we can scape the warning by giving the button element this attribute,`suppressHydrationWarning`. It will solve our problem.
