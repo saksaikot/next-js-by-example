@@ -351,3 +351,11 @@ In the index page we can dynamically add post link, to generate the link we need
 **NOTE: I need to learn and understand `for..of` and `for..in`**.
 Then we can simply pass props using getStaticProps function.
 **NOTE: I also have a problem, the props i was sending in `getStaticProps` without giving a key, like ,`{props:props}` but i need to do it like this, `{props:{posts:posts}}`**
+
+# 012. Dynamic routes in production mode
+
+If we build our app then we will see that now the index page and the post pages are SSG, and have filled circle.  
+![012. Dynamic routes in production mode](screen-shots/012.%20Dynamic%20routes%20in%20production%20mode.jpg)  
+Also we can see that next build three post pages for us. this ssg pages are static. and next-js build this page as static and json. It first uses the `getStaticPaths` to get the paths and the passes it to `getStaticProps` then it passes the props to page and then next.js rendered the page and generate the static html file.We can see our files at `project_root->.next->server`. This information is already written earlier.
+
+**Note: even we write the code for dynamic page but using the getStaticPaths and getStaticProps next-js make it static. and we can use it any hosting provider that only support static page ie: github pages.**
