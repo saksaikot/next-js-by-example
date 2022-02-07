@@ -288,3 +288,51 @@ Now we can use it to parse the html. We will use `article` instead of `p` since 
 ```
 
 Now we can see our first post parsed our html.
+
+## 008 Front matter
+
+By using the marked we can only extract the body but we need to extract our title as well.In markdown file we can add meta data, this is called front matter. this is written on top and the block is encapsulated by three dash and new line at start and the end. inside we can have data as yml format
+
+```md
+---
+title: "my first post title"
+author: "Saikot"
+---
+```
+
+**Note: After `:` you need to add a space**
+and to extract the front matter data we use the package called gray-matter
+gray-matter return two data, `content` and `data` the content is the exact markdown without the front matter block, and the data is object of the front matter provided in the markdown file.
+so lets install the gray-matter `npm i gray-matter`
+Note: in the getStaticProps we cannot pass `date` data, we need to convert it into number or string, it is a limitation of next-js
+
+## 009. Dynamic Route and getStaticPaths
+
+Lets create another markdown post.Then in posts pages we need to create a new `second-post.jsx` file which will be same as the `first-post.jsx`.But next-js have the dynamic page feature. we can simply make a post page for all of our post pages.Before that we need to change our posts filename in a way that can be exposed for all posts. Let assume, we name the url part of each post is slug, I already noted what is slug. ie, `localhost:3000/post/first-post` and `localhost:3000/post/second-post` here the `first-post` and the `second-post` is slug and this slug is identifying the post page we need.So we need to tell next-js that for all page we accept slug. to expose this slug in posts url we make the file name like this `[slug].jsx`. here inside `[]` meaning this is a special file and anything after the `localhost:3000/posts/` will be placed in slug. ie: `localhost:3000/post/first-post` the slug value is `first-post`. slug is in a sense a wildcard which matches everything after the `/post/` url.But in next-js we need to validate this slug, we need to tell next-js which paths are valid. this is why when we set the filename as wildcard we need to also provide the `getStaticPaths` where we define our valid paths.Now if we look at our request url path we will see that the will be look like this `localhost:3000/post/first-page` we know `first-page` is slug, or it is stored in slug variable. but next-js get it inside `params` object,like this, `{params:{slug:'first-post'}}`, using this concept we can send a paths array, where we mention our valid path as array item. this paths array need to send as object. so like this,
+
+```js
+{
+  paths: [
+    {
+      params: { slug: "first-post" },
+    },
+    {
+      params: { slug: "second-post" },
+    },
+  ];
+}
+```
+
+again the getStaticPath need to be async and exported.
+Along with the paths property we need to also provide the `fallback` property, the fallback property wii tell what action need to take in case paths are not matched, in our case we want to set fallback as false, ie `fallback:false`, meaning in case we don't have a valid path then show the 404 error message. next-js also provide feature to make the page on-demand if requested page is not found.when we use the `getStaticPaths` our `getStaticProps` can receive the data from the `getStaticPaths` we call it context.If we update the `getStaticProps` to receive the context and log it,we will see this log-
+
+```txt
+[Post page] [getStaticProps-context] {
+  params: { slug: 'first-post' },
+  locales: undefined,
+  locale: undefined,
+  defaultLocale: undefined
+}
+```
+
+Here we can see that the context has a params property and inside it slug property, but we need only this slug so we can destructure it at parameter section,ie:`{params:{slug}}`, using this slug we can pass it to `getPost` method to get the post by the url. now we can see the first post and the second post manually entering the url `localhost:3000/post/second-post`, because we did not setup second post link. but we can see that all are working as expected.

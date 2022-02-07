@@ -1,4 +1,7 @@
-# This is my first post
+---
+title: "This is my first post"
+date: "2022-02-06"
+---
 
 I'm writing this **paragraph** in markdown.  
 I can also write list
