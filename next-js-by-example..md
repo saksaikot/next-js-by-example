@@ -359,3 +359,10 @@ If we build our app then we will see that now the index page and the post pages 
 Also we can see that next build three post pages for us. this ssg pages are static. and next-js build this page as static and json. It first uses the `getStaticPaths` to get the paths and the passes it to `getStaticProps` then it passes the props to page and then next.js rendered the page and generate the static html file.We can see our files at `project_root->.next->server`. This information is already written earlier.
 
 **Note: even we write the code for dynamic page but using the getStaticPaths and getStaticProps next-js make it static. and we can use it any hosting provider that only support static page ie: github pages.**
+
+# 05 Client-side Functionality
+
+## 001. ThemeSwitch Component
+
+As we can see our web page has no interactive element other than the nav link.Now we want to add a button in the nav so when it clicked the theme of the page change.we will have a dark mode and light mode.  
+we created the `ThemeSwitch` button component. added the functionality if, clicked the darkTheme state will altered and the text will change as well. and added some style.
