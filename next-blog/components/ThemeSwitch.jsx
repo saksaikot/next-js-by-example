@@ -14,6 +14,7 @@ export default function ThemeSwitch() {
             border: 0;
             cursor: pointer;
             font-weight: 900;
+            color: inherit;
           }
         `}
       </style>

@@ -366,3 +366,25 @@ Also we can see that next build three post pages for us. this ssg pages are stat
 
 As we can see our web page has no interactive element other than the nav link.Now we want to add a button in the nav so when it clicked the theme of the page change.we will have a dark mode and light mode.  
 we created the `ThemeSwitch` button component. added the functionality if, clicked the darkTheme state will altered and the text will change as well. and added some style.
+
+## 002. Dark Mode Style
+
+For our dark theme we want the text color be white and the background is dark, and for light those are opposite. we can use the custom variable of css to do that, we need to fix the link color as well cause on dark background the link color red is not working well.
+And also in dark theme our button color is black, so we need to change it, we can simply put color to inherit
+so using these three custom property we can switch the theme manually
+
+```css
+/* for light theme */
+:root {
+  --color: rgb(32, 32, 32);
+  --background-color: rgb(252, 243, 243);
+  --link-color: rgb(204, 24, 24);
+}
+
+/* for dark theme */
+:root {
+  --background-color: rgb(32, 32, 32);
+  --color: rgb(252, 243, 243);
+  --link-color: rgb(194, 109, 11);
+}
+```
