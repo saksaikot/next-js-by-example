@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DarkTheme from "./DarkTheme";
 
 export default function ThemeSwitch() {
   const [darkTheme, setDarkTheme] = useState(false);
@@ -18,6 +19,7 @@ export default function ThemeSwitch() {
           }
         `}
       </style>
+      {darkTheme && <DarkTheme />}
     </>
   );
 }
