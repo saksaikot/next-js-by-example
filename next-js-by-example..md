@@ -344,3 +344,10 @@ In getStaticPaths we are manually providing the path or slug, and if we add a th
 
 And in the post page we can use it in getStaticPaths to generate the list of path.Since the `getSlugs` method is returning slugs as array, we can map through it can generate the `params` of `slug` array.
 After we can see that we can access the third-post page, though we need to enter the url manually. and with this approach we just add the markdown file of our post and it simply added to our `getStaticPaths` function.
+
+## 011. Listing posts
+
+In the index page we can dynamically add post link, to generate the link we need to have the post slug and the post title of each post. We can make the getPosts function and using our already created function we can make the getPosts method which will have all posts with their slug.  
+**NOTE: I need to learn and understand `for..of` and `for..in`**.
+Then we can simply pass props using getStaticProps function.
+**NOTE: I also have a problem, the props i was sending in `getStaticProps` without giving a key, like ,`{props:props}` but i need to do it like this, `{props:{posts:posts}}`**

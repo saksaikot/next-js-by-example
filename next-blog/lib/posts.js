@@ -19,3 +19,13 @@ export async function getSlugs() {
     .filter((file) => file.endsWith(extension))
     .map((filename) => filename.slice(0, -extension.length));
 }
+
+export async function getPosts() {
+  const slugs = await getSlugs();
+  const posts = [];
+  for (const slug of slugs) {
+    const post = await getPost(slug);
+    posts.push({ slug, ...post });
+  }
+  return posts;
+}

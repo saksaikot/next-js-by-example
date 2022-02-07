@@ -1,8 +1,18 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-export default function index() {
+import { getPosts } from "../lib/posts";
+
+export async function getStaticProps() {
+  const posts = await getPosts();
+
+  return {
+    props: { posts },
+  };
+}
+export default function index({ posts }) {
   console.log("[Index page] rendered");
+
   return (
     <>
       <Head>
@@ -11,11 +21,13 @@ export default function index() {
       <main>
         <h2>My blog</h2>
         <ul>
-          <li>
-            <Link href="/posts/first-post">
-              <a>First-post</a>
-            </Link>
-          </li>
+          {posts.map(({ slug, title }) => (
+            <li key={slug}>
+              <Link href={`/posts/${slug}`}>
+                <a>{title}</a>
+              </Link>
+            </li>
+          ))}
         </ul>
       </main>
     </>
