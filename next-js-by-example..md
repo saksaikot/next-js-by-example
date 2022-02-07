@@ -392,3 +392,7 @@ so using these three custom property we can switch the theme manually
 ## 003. DarkTheme Component
 
 since we have the light and dark theme ready and we are applying the light theme default. apart from the `<style jsx>` component which is only apply in the component we can add a global attribute to make it apply globally, ie `<style jsx global>`. here we can put our dark theme css code to apply the dark theme. so our button to make it work we could make it conditional rendering, means only apply when the `darkTheme` is on. But conditional style component is not working. we can overcome this by creating the style component a separate component. we can create the `DarkTheme` component where have all the dark theme styles as global jsx style. then we can conditional render this DarkTheme component.
+
+## 004. Hydration
+
+In dev mode our app is rendered twice,means both on server and client.But this is not happen for most of the time when the app is build.Unlike react, next-js have most of the component with the html file. and to make the react part working they do not call `ReactDom.render()` directly, instead they use a method `hydration`,ie `ReactDom.hydrate()`. with this the html component get attached to react and then it work like react.
