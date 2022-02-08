@@ -75,3 +75,9 @@ There are two option to install tailwind css, latest instruction [here](https://
 5. add vscode extension 'tailwind css intelliSense' to better tailwind code completion.
 
 Now if we run our app in dev we can see that our heading has different style.
+
+## 006. Utility First css
+
+Tailwind is utility first css framework.We can style our component only using the utility class. the difference between bootstrap and tailwind is bootstrap has a fixed style. while by using tailwind the design is what user want.
+But using tailwind will make the reusable style complex, but it is not a problem for react, we simply create a reusable react component with tailwind css, that can be reusable in our app.
+ei. we give a p-3 to our main tag and our title, we make it a Title component, we can reuse it other place.
