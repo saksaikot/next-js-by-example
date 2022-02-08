@@ -51,3 +51,27 @@ If we inspect the next-shop directory we can see that there are few extra files.
 ```
 
 Now we run our app in dev mode. In the project directory executed `npm run dev`
+
+## 003 TypeScript Support
+
+skipping TypeScript support
+
+## 005. Tailwind Setup
+
+There are two option to install tailwind css, latest instruction [here](https://tailwindcss.com/docs/guides/nextjs)
+
+1. when creating the project `npx create-next-app@latest -e with-tailwindcss project-name`, it will use the tailwindcss as template to create the project. But the packages are not always up to date.
+2. The second approach is manually installing,
+   1.install `tailwindcss` `postcss` `autoprefixer` as dev dependency `npm i -D tailwindcss postcss autoprefix`, note `-D` and `--save-dev` are same
+3. initiate tailwindcss `npx tailwindcss init -p` it will create config file for tailwindcss and postcss.the `postcss.config.js` config postcss to use tailwindcss and autoprefix.the `tailwind.config.js` we need to modify the content property,` content: [ "./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", ],` so that only css used by js,jsx,ts,tsx files under pages and components folder are get build.**Note: this command need to execute at project dir, I did on pages folder and it made the configs file inside pages folder**
+4. add this in global css,These are tailwind directive, and processed by postcss that will make it stander css rule, adding tailwind these way later we can customize or add additional style as our need
+
+   ```css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
+
+5. add vscode extension 'tailwind css intelliSense' to better tailwind code completion.
+
+Now if we run our app in dev we can see that our heading has different style.
