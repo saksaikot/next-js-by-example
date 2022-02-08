@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Title from "../components/Title";
 
 export default function Home() {
   return (
@@ -6,8 +7,8 @@ export default function Home() {
       <Head>
         <title>Next-Shop</title>
       </Head>
-      <main>
-        <h2>Next-shop</h2>
+      <main className="p-3">
+        <Title>Next Shop</Title>
       </main>
     </>
   );
