@@ -109,3 +109,49 @@ To build the backend api using node and express or by other stack it will be tim
 ![5](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h05m42s900t.png)
 
 Next-js have already a list of example of the several CMS providers, can be found [here](https://nextjs.org/docs/advanced-features/preview-mode). We will use Strapi for our project. It is open source and self hosted.
+
+## 008 Strapi Headless CMS basic and rest client
+
+The official documentation can be found here [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html)
+
+To learn the basics of strapi we will create an example strapi project.To install strapi we can follow the quick start guide, `npx create-strapi-app@latest app_name --quickstart`. this will install strapi in app_name folder and install all dependency, after successfully installing strapi, it will run `npm run dev` and open the super admin user registration page at `http://localhost:1337/` this location. here we can setup our super admin user.By default strapi uses sqlite database, we can change the database as our need.
+Current installed version is `4.0.7`. I can see that the interface is changed tittle bit as shown in video. chances are it will get update again. But it will be small changes. Now to add a user from left top of the page `Content Manager`-> from Collection Type->User->Create new entry.Here we need to give `username`,`email`,`password`, `Role` and `confirmed` is on.
+To create new collection, `Content-Type builder`->`+ Create new collection type`->Display name:ei`Product`->Advanced Setting->Draft system:off->Continue, Now add fields according to need then `save`.Field types -
+
+- Text:small/long
+- Rich text
+- Number
+- Date
+- Boolean
+- Relation
+- Enumeration,list of values, then pick one
+- Media:images,videos
+- JSON
+- UID
+  Then we need to give permission according our need.For example our product list and product details need public access. To manage the permission -> Settings->Users & permissions plugin ->Roles->public->edit->permission->product->select `find` and `findOne` -> `save`.
+  Now we need to test our api endpoints, our products collection can be access at `localhost:1337/api/products` and we will get a response like this, for better code viewing I've split whole response into two section
+
+```http
+HTTP/1.1 200 OK
+........
+Connection: close
+{
+  our_data_in_JSON
+}
+```
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "title": "first product",
+      "description": "first product description",
+      "price": 300,
+      "createdAt": "2022-02-09T09:54:45.956Z",
+      "updatedAt": "2022-02-09T09:54:45.956Z"
+    }
+  },
+  "meta": {}
+}
+```
