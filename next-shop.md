@@ -202,3 +202,22 @@ Now in server side approach, the products is loaded in server side, then it serv
 In client side approach, server will send an empty array to client, then client side hydrate it and then load the products, it will display little-bit slow.It is not good for search engin.
 
 However using the server side approach we will not have the latest data while using the client side approach we will have latest data.
+comparison
+
+## 004. Incremental Static Regeneration,ISR
+
+We know that SSG are good for page loading time, But we also need a way to show updated data, next-js solve this problem by ISR. in getStaticProps we can also set `revalidate` property other than `props`, revalidate accept number as number in seconds. `revalidate` do a smart job to regenerate the static page with updated data. lets say the revalidate time is 30 seconds. So when a page get a request from browser is make an expire time of old static page, then after the if the page is get a request then it will re-process it get static props and generate new static page, but to make a faster user experience it serve the old file immediately, the update is done in background and also set the expire.
+
+we call it server side option 2,file name `index-server-2.jsx`. it solves our problem smartly.Though in dev mode the revalidate occur on every request, but in production mode it behave as mentioned earlier. revalidate code example
+
+```js
+export async function getStaticProps() {
+  const products = await getProducts();
+  return {
+    props: {
+      products,
+    },
+    revalidate: 30,
+  };
+}
+```
