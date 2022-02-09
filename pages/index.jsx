@@ -1,12 +1,19 @@
 // server side with getStaticProps
 import Head from "next/head";
 import Title from "../components/Title";
+import { getProducts } from "../lib/product";
 
-export default function Home() {
-  const products = [
-    { id: 1, title: "First product" },
-    { id: 2, title: "Second product" },
-  ];
+export async function getStaticProps() {
+  const products = await getProducts();
+  return {
+    props: {
+      products,
+    },
+  };
+}
+
+export default function Home({ products }) {
+  console.log("[Home] - products ", products);
   return (
     <>
       <Head>

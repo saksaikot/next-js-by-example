@@ -1,13 +1,22 @@
 // client side with useEffect
 
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import Title from "../components/Title";
+import { getProducts } from "../lib/product";
 
 export default function Home() {
-  const products = [
-    { id: 1, title: "First product" },
-    { id: 2, title: "Second product" },
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const products = await getProducts();
+      setProducts(products);
+    };
+    loadProducts();
+  }, []);
+
+  console.log("[Home] - products ", products);
   return (
     <>
       <Head>
