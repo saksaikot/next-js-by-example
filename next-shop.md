@@ -81,3 +81,31 @@ Now if we run our app in dev we can see that our heading has different style.
 Tailwind is utility first css framework.We can style our component only using the utility class. the difference between bootstrap and tailwind is bootstrap has a fixed style. while by using tailwind the design is what user want.
 But using tailwind will make the reusable style complex, but it is not a problem for react, we simply create a reusable react component with tailwind css, that can be reusable in our app.
 ei. we give a p-3 to our main tag and our title, we make it a Title component, we can reuse it other place.
+
+## 007. High-level Architecture
+
+Data Requirement for our app, we want to sell product on our site, so we need product, we will sell our product to customer, so we need user, and user will place order and will need a cart, this cart will have user to product relationship
+
+1. Products: name,details,price,image
+2. Users:let user use our site,and signin and signup
+3. ShoppingCarts:
+   Data Storage
+   in our previous example we simply used file to store our content,
+
+But for next-shop it will be not a good approach, we need a database to store our data, database can be mysql or no-sql like mongodb.Database will be helpful to maintain relation between other table of data.
+Data Storage used by next-blog  
+![1](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h02m10s767t.png)
+
+Storage need to use for our next-shop is a database.  
+![2](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h02m45s633t.png)
+
+Other than directly implementing the database logic in our next-js page it will be good idea to have a separate api that expose the database management.Then we could focus on front-end, and only do the portion of connecting api.
+![3](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h03m58s500t.png)
+
+This will be also helpful if we build mobile app then they can also utilise the same api.
+![4](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h04m24s400t.png)
+
+To build the backend api using node and express or by other stack it will be time consuming, will take more resource. Now a days it is a common practise or gaining popularity that we use a `headless CMS`, headless CMS() will expose the backend api we need as well have a admin ui. So if we use headless CMS we don't need to write the backend api and the admin ui. we only make the public ui. For most of the case it is a good approach.
+![5](screen-shots/007.%20High-level%20Architecture/007%20High-level%20Architecture-00h05m42s900t.png)
+
+Next-js have already a list of example of the several CMS providers, can be found [here](https://nextjs.org/docs/advanced-features/preview-mode). We will use Strapi for our project. It is open source and self hosted.
