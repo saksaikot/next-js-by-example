@@ -159,3 +159,18 @@ Connection: close
 ## 009. Backend Setup
 
 Teacher give us a pre-built project but that was on Strapi@3 but the latest is Strapi@4, I am working with version 4, thats why the database import is not working. need add products manually, and there is thr Shopping Cart collection. I've not added yet, it will be explain later. And the api uri is also changed, to achieve the same as video I need to make the uri like this `localhost:1337/api/products/?populate=picture` this will include all the picture. By default it does not include the picture field.As the video shown, i build the project and start it from `npm run start`. Need to learn more about `strapi`.
+
+# 08 Data Fetching
+
+## 001. Displaying the Products
+
+Lets work with dummy post data first.
+
+```js
+[
+  { id: 1, title: "first product" },
+  { id: 2, title: "second product" },
+];
+```
+
+now we can show it as unordered list.After that we need to get the data from our backend server. we can use fetch for it, even though fetch is available in browser not in node, next-js already include the fetch module for us.After he talked about to fetch the data at server side (with getStaticProps) or with client side (using react hook). He encourage to build by myself. so there will be two files, index and index-1. we will build both solution and will see there advantages and disadvantages.

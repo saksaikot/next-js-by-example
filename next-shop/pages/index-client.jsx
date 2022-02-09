@@ -1,4 +1,5 @@
-// server side with getStaticProps
+// client side with useEffect
+
 import Head from "next/head";
 import Title from "../components/Title";
 
