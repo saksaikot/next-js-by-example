@@ -9,11 +9,13 @@ export default function Home() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const loadProducts = async () => {
-      const products = await getProducts();
-      setProducts(products);
-    };
-    loadProducts();
+    // const loadProducts = async () => {
+    //   const products = await getProducts();
+    //   setProducts(products);
+    // };
+    // loadProducts();
+    // getProducts().then((products) => setProducts(products));
+    getProducts().then(setProducts);
   }, []);
 
   console.log("[Home] - products ", products);

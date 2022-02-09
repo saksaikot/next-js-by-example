@@ -182,3 +182,23 @@ created getProducts lib,products values are inside attributes property,created b
 ## 002. Fetching Data Server side
 
 Same as what i did, only added extra function to trip down extra details from product, and only took `id` and `title`
+
+## 003 fetching Data client-side
+
+we can use `then` chaining to perform our async operation, then it will required less code.
+
+```js
+getProducts().then((products) => setProducts(products));
+```
+
+We can reduce the code even further, since then and setProducts accept the parameter products, we can simply pass `setProducts` function, this will work same.
+
+```js
+getProducts().then(setProducts);
+```
+
+Now in server side approach, the products is loaded in server side, then it serve the page with rendered products content, which will then hydrated. this will produce faster loading.It also good for search engin.
+
+In client side approach, server will send an empty array to client, then client side hydrate it and then load the products, it will display little-bit slow.It is not good for search engin.
+
+However using the server side approach we will not have the latest data while using the client side approach we will have latest data.
