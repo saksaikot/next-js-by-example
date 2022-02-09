@@ -174,3 +174,11 @@ Lets work with dummy post data first.
 ```
 
 now we can show it as unordered list.After that we need to get the data from our backend server. we can use fetch for it, even though fetch is available in browser not in node, next-js already include the fetch module for us.After he talked about to fetch the data at server side (with getStaticProps) or with client side (using react hook). He encourage to build by myself. so there will be two files, index and index-1. we will build both solution and will see there advantages and disadvantages.
+
+## 001A. exercise
+
+created getProducts lib,products values are inside attributes property,created both client side load using `getStaticProps` and server side load using `useState` and `useEffect`.
+
+## 002. Fetching Data Server side
+
+Same as what i did, only added extra function to trip down extra details from product, and only took `id` and `title`
