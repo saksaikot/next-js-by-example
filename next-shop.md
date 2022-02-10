@@ -229,3 +229,20 @@ we have another option in server-side rendering, it will render at all the reque
 ![1](screen-shots/005%20Server-side%20Rendering-1.jpg)
 
 Here we can see that the page `index-server-3` has (λ) lambda symbol.Means it will render each time a request is made and like same way when we are in dev mode and for all server side rendering cases it re-render the page.
+
+## 006. API Routes
+
+we already have our backend api, why we need any other api route.Because then we can control what data need to send and also hide the strapi from client. we can do this in next-js. next js also support backend api. the api is called every time it gets request. the handler function look like this.
+
+```js
+import { getProducts } from "../../lib/product";
+
+async function handler(req, res) {
+  const products = await getProducts();
+  console.log("[products] [handler]");
+  return res.status(200).json(products);
+}
+export default handler;
+```
+
+we write a handler function and make it default export. handler function receive 2 parameter request and response, we can write it in shorthand `req,res`, this is similar to express in node. to send a response we use the res object and send it in json method like this `return res.status(200).json(products);` then we can confirm it by a GET request at `localhost:3000/api/products`. It is called backend for front-end pattern.
