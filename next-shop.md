@@ -221,3 +221,11 @@ export async function getStaticProps() {
   };
 }
 ```
+
+## 005 Server-side Rendering
+
+we have another option in server-side rendering, it will render at all the request it receive from server,the way we do it we write same function like `getStaticProps`, and rename the function name `getServerSideProps`, `getServerSideProps ` only accept `props` property, like in `getStaticProps` we can add revalidate property but in `getServerSideProps` we only send `props` property.let us see the build of our current project.
+
+![1](screen-shots/005%20Server-side%20Rendering-1.jpg)
+
+Here we can see that the page `index-server-3` has (λ) lambda symbol.Means it will render each time a request is made and like same way when we are in dev mode and for all server side rendering cases it re-render the page.
