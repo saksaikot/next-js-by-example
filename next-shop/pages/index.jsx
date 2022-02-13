@@ -1,4 +1,3 @@
-// server side with getStaticProps
 import Head from "next/head";
 import Title from "../components/Title";
 import { getProducts } from "../lib/product";
@@ -9,6 +8,7 @@ export async function getStaticProps() {
     props: {
       products,
     },
+    revalidate: 5 * 60,
   };
 }
 

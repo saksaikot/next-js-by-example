@@ -272,3 +272,34 @@ after running both page we get simillar result.
 ![1](/screen-shots/007.%20Calling%20Api%20Routes-1.jpg)
 
 in next video we will see which option will be best for us.
+
+## 008 Choosing a data fetching strategy
+
+There are roughly five ways to show data to client,
+1 Sever side rendering
+A. Static generation, using `getStaticProps`,data fetched at build time
+B. Incremental Static Regeneration, using `getStaticProps`+`revalidate`, data fetched at build time, plus at every revalidate time
+C. Server side rendering, using `getServerSideProps`,data fetched at runtime on every request.
+2 Client side rendering
+A. With external api, using `useEffect and useState`, data fetched on client side on every update
+B. With using next-js internal API routing,same as above but using next-js api route.
+we can view this from the image below-
+![Fetching Data with next-js](/screen-shots/008%20Choosing%20a%20Data%20Fetching%20Strategy/008%20Choosing%20a%20Data%20Fetching%20Strategy-00h02m32s633t.png)
+
+here we can see that we have couple of option
+option 1A,1B,1C is good for SEO, 1A,1B is faster, since those are static page.And is we want to host static web or can't use next-js or node as backend then we have only 1A,B1,B2 options. So every options that their benefits and drawback.
+To make the decision.
+We can follow the flow chart below -
+![Flowchart](/screen-shots/008%20Choosing%20a%20Data%20Fetching%20Strategy/008%20Choosing%20a%20Data%20Fetching%20Strategy-00h06m03s067t.png)
+**Same data for all users?**
+
+1. **Yes**->Can the data change?
+   - **No**->`Static Generation`
+   - **Yes**->`Incremental Static Regeneration`
+2. **No**->API accessible from browser?
+   - **Yes**->`Client-side from external API`
+   - **No**->`Client Side Via API Route`
+
+In this flow chart we have seen than there is no mention of `getServerSideProps`, Because there are other options in next-js those are better than this.
+
+We also come to the understanding that for our product page it will be good for us to use the ISR. So we will only keep the ISR version and remove other files.
