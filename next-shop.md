@@ -246,3 +246,29 @@ export default handler;
 ```
 
 we write a handler function and make it default export. handler function receive 2 parameter request and response, we can write it in shorthand `req,res`, this is similar to express in node. to send a response we use the res object and send it in json method like this `return res.status(200).json(products);` then we can confirm it by a GET request at `localhost:3000/api/products`. It is called backend for front-end pattern.
+
+## 007. Calling Api Routes
+
+Now are going to use this internal api in our app, I've copied the code of `index-client.jsx` to `index-client-internal-api.jsx`.updated code the use the internal api
+
+```js
+useEffect(() => {
+  (async () => {
+    const response = await fetch("/api/products");
+    const products = await response.json();
+    setProducts(products);
+  })();
+}, []);
+```
+
+Note: useEffect cannot use async function, thats why we use an anonymous function then immediately invoked it,`(()=>{})()`
+
+after running both page we get simillar result.
+
+**For external api**: we can see that the size of the file `11.7k` and response time `28ms`  
+![1](/screen-shots/007.%20Calling%20Api%20Routes-2.jpg)
+
+**For internal api**: the size of the page is only `432 B` and response time `40ms`, here the response time is little bit more, since it need to process the external data on server side. But the content size is reduce heavily, It also helps us to hide our external api so that our backend api is not exposed to the world.
+![1](/screen-shots/007.%20Calling%20Api%20Routes-1.jpg)
+
+in next video we will see which option will be best for us.
