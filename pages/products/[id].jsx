@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Title from "../../components/Title";
+import { ApiError } from "../../lib/api";
 import { getProductDetails, getProducts } from "../../lib/product";
 
 export async function getStaticPaths() {
@@ -14,13 +15,17 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { id } }) {
   try {
     const product = await getProductDetails(id);
+    return {
+      props: { product },
+      revalidate: 2,
+    };
   } catch (err) {
-    return { notFound: true };
+    if (err instanceof ApiError) {
+      // console.log(err);
+      if (err.status === 404) return { notFound: true };
+    }
+    throw err;
   }
-  return {
-    props: { product },
-    revalidate: 5 * 60,
-  };
 }
 
 export default function Product({ product }) {
