@@ -373,3 +373,8 @@ export async function getProductDetails(id) {
   };
 }
 ```
+
+## 010. Product Page
+
+Same as i did, there are few small improvement, the page use the same structure from `index.jsx` page, and for single product details used the same stripFunction, but since im using latest Strapi, and its structure is different, I used separate implementation.
+Note: the id value provided by database is `Number` but the value provided by next-js params is `String` to we need to convert it to string `id.toString()` or `String(id)`
