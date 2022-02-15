@@ -378,3 +378,8 @@ export async function getProductDetails(id) {
 
 Same as i did, there are few small improvement, the page use the same structure from `index.jsx` page, and for single product details used the same stripFunction, but since im using latest Strapi, and its structure is different, I used separate implementation.
 Note: the id value provided by database is `Number` but the value provided by next-js params is `String` to we need to convert it to string `id.toString()` or `String(id)`
+
+## 011. Regenerating Product Pages
+
+As fer now our product page is only static page, But it will not update the content is the content is updated in the database, so we need to add `revalidate` property in `getStaticProps`.
+**Note**: We need to use ISR, means add the revalidate property everywhere we using the data, since we used the product data in homepage and product page we must use ISR in those page.
