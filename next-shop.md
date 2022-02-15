@@ -420,3 +420,7 @@ try {
 ```
 
 **Note**: I was facing problem to understand the concept, I need to check error in `setStaticProps`, but i was checking in `setStaticPaths`, as `setStaticPaths` run only build time and i should check the error in `setStaticProps`
+
+## 014. Shared fetchJson function
+
+I already used the fetchJson function, but since it is not a product action we can simply make it separate lib of api. Then we can check that our app is functioning as before.
