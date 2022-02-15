@@ -424,3 +424,65 @@ try {
 ## 014. Shared fetchJson function
 
 I already used the fetchJson function, but since it is not a product action we can simply make it separate lib of api. Then we can check that our app is functioning as before.
+
+## 015. Custom Error class
+
+Our logic has a mistake, if for somehow cms api does not return any thing, ie: it can be down for some reason, then our page can show same `404` error, but this is not good, if it happens then search engin can remove the product from search engin, so we need to proceed the error more accurately.so we can tell when the product is not found and when it is an internal error.
+
+But first we need to learn about `Error` class extension.
+
+```js
+class MyError extends Error {
+  constructor(foo = "bar", message) {
+    super(message);
+    this.name = "MyError";
+    this.foo = foo;
+
+    // to add a proper stack trace
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MyError);
+    }
+  }
+}
+```
+
+we here we extends Error class, in constructor we can accept any parameter and our message, then we need to call super with this message, then we need the set Error name to our error class name. If we want to include proper error stack trace then we need to bind the this to our class,`Error.captureStackTrace(this,MyError)`.
+using this we can implement our new Error class
+
+```js
+export class ApiError extends Error {
+  constructor(url, status) {
+    super(`${url} has a status code of ${status} `);
+    this.name = "ApiError";
+    this.url = url;
+    this.status = status;
+    // set proper stack trace
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ApiError);
+    }
+  }
+}
+```
+
+now we can check easily if the error is a instance of ApiError `err instanceof ApiError`, ApiError must be imported,
+
+```js
+export async function getStaticProps({ params: { id } }) {
+  try {
+    const product = await getProductDetails(id);
+    return {
+      props: { product },
+      revalidate: 5 * 60,
+    };
+  } catch (err) {
+    if (err instanceof ApiError) {
+      // console.log(err);
+      if (err.status === 404) return { notFound: true };
+    }
+    throw err;
+  }
+}
+```
+
+**Note: product must be used inside the try block other wise it will throw error.I was getting error while build.**
+With this we solve our 404 and 500 error handling.
