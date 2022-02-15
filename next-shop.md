@@ -383,3 +383,10 @@ Note: the id value provided by database is `Number` but the value provided by ne
 
 As fer now our product page is only static page, But it will not update the content is the content is updated in the database, so we need to add `revalidate` property in `getStaticProps`.
 **Note**: We need to use ISR, means add the revalidate property everywhere we using the data, since we used the product data in homepage and product page we must use ISR in those page.
+
+## 012. Fallback blocking
+
+We have a problem in our code, Now if we add any new product then because ISR our index page will add the new product but since the validate path we defined are fetched at build time it will not make the new product valid and will through `404` page not found.Here comes into play the fallback property, fallback property have three values `false`,`true`,`"blocking"`,
+`false`: Means will show 404 page,
+`true`: means, it will send the page with empty values, and in background it will fetch the data and will generate the json props.then it send the props.
+`blocking`: means, it will first fetch and render the page and then it send the response it is same as `SSR` , server-side rendering.
