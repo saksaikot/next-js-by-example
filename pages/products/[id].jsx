@@ -12,7 +12,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { id } }) {
-  const product = await getProductDetails(id);
+  try {
+    const product = await getProductDetails(id);
+  } catch (err) {
+    return { notFound: true };
+  }
   return {
     props: { product },
     revalidate: 5 * 60,
