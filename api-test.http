@@ -1,4 +1,5 @@
 GET http://localhost:1337/api/products/?populate=picture
-
+###
+GET http://localhost:1337/api/products/1?populate=picture
 ###
 GET http://localhost:3000/api/products
