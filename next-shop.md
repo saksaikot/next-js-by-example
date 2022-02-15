@@ -277,12 +277,16 @@ in next video we will see which option will be best for us.
 
 There are roughly five ways to show data to client,
 1 Sever side rendering
-A. Static generation, using `getStaticProps`,data fetched at build time
-B. Incremental Static Regeneration, using `getStaticProps`+`revalidate`, data fetched at build time, plus at every revalidate time
-C. Server side rendering, using `getServerSideProps`,data fetched at runtime on every request.
+
+- A. Static generation, using `getStaticProps`,data fetched at build time
+- B. Incremental Static Regeneration, using `getStaticProps`+`revalidate`, data fetched at build time, plus at every revalidate time
+- C. Server side rendering, using `getServerSideProps`,data fetched at runtime on every request.
+
 2 Client side rendering
-A. With external api, using `useEffect and useState`, data fetched on client side on every update
-B. With using next-js internal API routing,same as above but using next-js api route.
+
+- A. With external api, using `useEffect and useState`, data fetched on client side on every update
+- B. With using next-js internal API routing,same as above but using next-js api route.
+
 we can view this from the image below-
 ![Fetching Data with next-js](/screen-shots/008%20Choosing%20a%20Data%20Fetching%20Strategy/008%20Choosing%20a%20Data%20Fetching%20Strategy-00h02m32s633t.png)
 
@@ -303,3 +307,69 @@ We can follow the flow chart below -
 In this flow chart we have seen than there is no mention of `getServerSideProps`, Because there are other options in next-js those are better than this.
 
 We also come to the understanding that for our product page it will be good for us to use the ISR. So we will only keep the ISR version and remove other files.
+
+## 009 Product page links with exercise
+
+Updated Link(used next-js Link Component) in index page,
+
+```jsx
+{
+  products.map(({ id, title }) => (
+    <li key={id}>
+      <Link href={`/products/${id}`}>
+        <a> {title}</a>
+      </Link>
+    </li>
+  ));
+}
+```
+
+For the exercise, created a `products/[id].jsx` page, created `getStaticPaths` for the valid id's,
+
+```js
+export async function getStaticPaths() {
+  const products = await getProducts();
+  return {
+    paths: products.map(({ id }) => ({ params: { id: String(id) } })),
+    fallback: false,
+  };
+}
+```
+
+Note: to use `getStaticPaths` we must create the `getStaticProps`,then using this paths we get the product details in `getStaticProps`
+
+```js
+export async function getStaticProps({ params: { id } }) {
+  const product = await getProductDetails(id);
+  return {
+    props: { product },
+  };
+}
+```
+
+in `lib->product.js` we created a function to strip down only required fields,
+
+```js
+export async function getProductDetails(id) {
+  const response = await fetch(`${API_BASE}/products/${id}?populate=picture`);
+  const product = await response.json();
+  const {
+    attributes: { title, description, price, picture },
+  } = product.data;
+  console.log(title, picture);
+  const {
+    attributes: { width, height, caption, url },
+  } = picture.data[0];
+  return {
+    title,
+    description,
+    price,
+    picture: {
+      width,
+      height,
+      caption,
+      url,
+    },
+  };
+}
+```
