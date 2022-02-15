@@ -390,3 +390,33 @@ We have a problem in our code, Now if we add any new product then because ISR ou
 `false`: Means will show 404 page,
 `true`: means, it will send the page with empty values, and in background it will fetch the data and will generate the json props.then it send the props.
 `blocking`: means, it will first fetch and render the page and then it send the response it is same as `SSR` , server-side rendering.
+
+## 013 Fallback and page not found
+
+Our code has still a problem, if we enter a product id that is not exist, then next-js will try to fetch the data from cms api, but cms api only send the text `Not Found` with `404` status code.With our current code, our function will try to parse it as json.So we need to make sure it handle that error.
+We can simply make a common fetchJson function to fetch and handle errors, and check in the `getStaticProps` if there is any error.
+
+```js
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (response.status === 404) {
+    throw new Error(`Product not found ${response.status}`);
+  } else if (response.status !== 200) {
+    throw new Error(`Internal server error ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+}
+```
+
+In product page
+
+```js
+try {
+  const product = await getProductDetails(id);
+} catch (err) {
+  return { notFound: true };
+}
+```
+
+**Note**: I was facing problem to understand the concept, I need to check error in `setStaticProps`, but i was checking in `setStaticPaths`, as `setStaticPaths` run only build time and i should check the error in `setStaticProps`
