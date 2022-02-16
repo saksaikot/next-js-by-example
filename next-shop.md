@@ -564,3 +564,7 @@ here
 
 - `grid`:`display:grid`
 - `grid-cols-2`:`grid-template-columns: repeat(2, minmax(0, 1fr));`
+
+## 003 product images
+
+now we need to add our image url in the get products function and add it to `index.jsx` page.
