@@ -17,7 +17,7 @@ export async function getStaticProps({ params: { id } }) {
     const product = await getProductDetails(id);
     return {
       props: { product },
-      revalidate: 2,
+      revalidate: parseInt(process.env.REVALIDATE_SECONDS),
     };
   } catch (err) {
     if (err instanceof ApiError) {
