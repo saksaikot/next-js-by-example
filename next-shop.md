@@ -513,3 +513,39 @@ EXAMPLE:${HOST}/new
 Note: We need to restart our app to process newly added keys to .env files.
 
 **Note:I forgot to parseInt in revalidate value**
+
+# 09 Responsive Design and Image Optimization
+
+## 001 Product Card
+
+created styled card component `ProductCard` for index page, used tailwind css to style the component.Used image from dummyimage.com `https://dummyimage.com/320x240`
+used tailwind css:
+
+- `border`:`border-width:1px`
+- `w-80`:`width:20rem` or `320px`
+- `my-4`:`margin-top:1rem;margin-bottom:1rem;`
+- - `hover:ClassName`: will affect in hover state
+
+- `p2`:`2 is .5 rem`
+- `flex`:`display:flex`;
+- `justify-between`:`justify-content:space-between`
+- `items-baseline`:`align-items:baseline`
+- `text-lg`:`font-size:1.125rem;line-height:1.75rem` `18px,28px`
+- `font-semibold`:`font-weight:600`
+- `shadow`:` --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);`
+
+- `shadow-xl`:`--tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);`
+
+```jsx
+<div className="border  w-80 my-4 shadow hover:shadow-xl">
+  <Link href={`/products/${id}`}>
+    <a>
+      <img src="https://dummyimage.com/320x240" alt="" />
+      <header className="p-2 flex justify-between items-baseline">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <span>{price}</span>
+      </header>
+    </a>
+  </Link>
+</div>
+```
