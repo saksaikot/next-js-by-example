@@ -1,16 +1,14 @@
 import { fetchJson } from "./api";
 
-const API_BASE = `http://127.0.0.1:1337/api`;
-const API_PRODUCTS = `${API_BASE}/products/?populate=picture`;
+const CMS_URL = process.env.CMS_URL;
+const CMS_PRODUCTS = process.env.CMS_PRODUCTS;
 
 export async function getProducts() {
-  const products = await fetchJson(API_PRODUCTS);
+  const products = await fetchJson(CMS_PRODUCTS);
   return products.data.map((product) => stripProductsDetails(product));
 }
 export async function getProductDetails(id) {
-  const product = await fetchJson(
-    `${API_BASE}/products/${id}?populate=picture`
-  );
+  const product = await fetchJson(`${CMS_PRODUCTS}/${id}?populate=picture`);
   const {
     attributes: { title, description, price, picture },
   } = product.data;

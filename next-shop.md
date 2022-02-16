@@ -486,3 +486,30 @@ export async function getStaticProps({ params: { id } }) {
 
 **Note: product must be used inside the try block other wise it will throw error.I was getting error while build.**
 With this we solve our 404 and 500 error handling.
+
+## 016. Environment variable
+
+Next-js support environment variables out of the box, there are four main `.env` files,
+
+1. `.env`, here we can keep general values of default values.
+2. `.env.development` here we can keep the value we want to override in development mode,ie: `next dev`
+3. `.env.production` here we can keep the value for production,ie: `next start`
+4. `.env.local` here we can keep the local values and secrets we need for our app, this file should not include in the version control, so it must be include in .gitignore file, create-next-app by default includes it.
+
+So here we can define same values, but `4>3>2>1` means `.env.local` will override the value of 3, or 2 will override value of 1.
+
+we can use variable in .env files
+
+```env
+PORT:8000
+HOST:http://localhost:$PORT
+EXAMPLE:${HOST}/new
+```
+
+**Note**:here next-js will automatically expand variable, here \$PORT will be auto expand.Since next-js uses `$`,if we want to use `$` in our value then we need to scape it `\$`
+**Note**: we need to be alert that value of `.env` are always string, we need to make appropriate data casting before we can use it.
+**Note**: we cannot use object destructuring, because next-js process it to separate server secrete.
+**NOTE**:We can access those value in `process.env.VALUE`.
+Note: We need to restart our app to process newly added keys to .env files.
+
+**Note:I forgot to parseInt in revalidate value**
