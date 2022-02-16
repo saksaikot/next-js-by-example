@@ -549,3 +549,18 @@ used tailwind css:
   </Link>
 </div>
 ```
+
+## 002. Responsive Grid
+
+Added grid to ul in index page,By default we should design the mobile view then we can make the change as per the breakpoint,
+we can prefix `md:`-768px, `lg:`-1024px, `xl`-1280px,
+to make the grid consistence I make the image to have full width `w-full` and gave the li to `w-12/10 ` 83.33% width
+
+```jsx
+<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></ul>
+```
+
+here
+
+- `grid`:`display:grid`
+- `grid-cols-2`:`grid-template-columns: repeat(2, minmax(0, 1fr));`
