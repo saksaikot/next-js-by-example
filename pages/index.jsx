@@ -23,11 +23,9 @@ export default function Home({ products }) {
       </Head>
       <main className="p-3">
         <Title>Next Shop</Title>
-        <ul>
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
-            <li key={product.id}>
-              <ProductCard product={product} />
-            </li>
+            <ProductCard product={product} key={product.id} />
           ))}
         </ul>
       </main>
