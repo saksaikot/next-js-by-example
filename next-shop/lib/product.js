@@ -20,6 +20,7 @@ export async function getProductDetails(id) {
     title,
     description,
     price,
+    url: CMS_URL + url,
     picture: {
       width,
       height,

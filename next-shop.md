@@ -735,3 +735,44 @@ Difference in priority and optimized image
 ## 004 Next Image component
 
 Already added in previous section
+
+## 05. Responsive product image
+
+Created unified OptImage component,
+
+```jsx
+<Image
+  src={src}
+  alt=""
+  width={width}
+  height={height}
+  quality={90}
+  {...imageProps}
+  // layout="fixed"
+/>
+```
+
+added this jsx for responsive style
+
+```jsx
+<>
+  <section className="flex flex-col md:flex-row gap-2 justify-between">
+    <div className="w-full">
+      <OptImage src={url} width={640} height={480} imageProps={imageProps} />
+    </div>
+    <main className="flex-1">
+      <p className="">{description}</p>
+      <footer className="text-lg font-medium mt-3">
+        <p>{price}</p>
+      </footer>
+    </main>
+  </section>
+  <style jsx>{`
+    section > * {
+      flex-basis: 100%;
+    }
+  `}</style>
+</>
+```
+
+Fixed data structure of single product details to use the `addImageOptimization`

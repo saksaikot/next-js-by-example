@@ -1,7 +1,9 @@
 import Head from "next/head";
 import React from "react";
+import OptImage from "../../components/OptImage";
 import Title from "../../components/Title";
 import { ApiError } from "../../lib/api";
+import { addImageOptimization } from "../../lib/image";
 import { getProductDetails, getProducts } from "../../lib/product";
 
 export async function getStaticPaths() {
@@ -15,8 +17,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { id } }) {
   try {
     const product = await getProductDetails(id);
+    const optProduct = await addImageOptimization([product], 1);
+    // console.log("optProduct", optProduct);
+
     return {
-      props: { product },
+      props: { product: optProduct[0] },
       revalidate: parseInt(process.env.REVALIDATE_SECONDS),
     };
   } catch (err) {
@@ -29,12 +34,7 @@ export async function getStaticProps({ params: { id } }) {
 }
 
 export default function Product({ product }) {
-  const {
-    title,
-    description,
-    price,
-    picture: { width, height, caption, url },
-  } = product;
+  const { title, description, price, url, imageProps } = product;
   return (
     <>
       <Head>
@@ -46,12 +46,28 @@ export default function Product({ product }) {
             <Title>{title}</Title>
           </header>
           <main>
-            <img src={`http://localhost:1337${url}`} alt="" />
-            <p>{description}</p>
+            <section className="flex flex-col md:flex-row gap-2 justify-between">
+              <div className="w-full">
+                <OptImage
+                  src={url}
+                  width={640}
+                  height={480}
+                  imageProps={imageProps}
+                />
+              </div>
+              <main className="flex-1">
+                <p className="">{description}</p>
+                <footer className="text-lg font-medium mt-3">
+                  <p>{price}</p>
+                </footer>
+              </main>
+            </section>
+            <style jsx>{`
+              section > * {
+                flex-basis: 100%;
+              }
+            `}</style>
           </main>
-          <footer>
-            <p>{price}</p>
-          </footer>
         </article>
       </main>
     </>
