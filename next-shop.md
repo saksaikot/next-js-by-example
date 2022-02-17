@@ -731,3 +731,7 @@ Difference in priority and optimized image
          loading="lazy" /></noscript
    ></span>
    ```
+
+## 004 Next Image component
+
+Already added in previous section
