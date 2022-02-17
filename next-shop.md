@@ -568,3 +568,166 @@ here
 ## 003 product images
 
 now we need to add our image url in the get products function and add it to `index.jsx` page.
+
+Next-js has a build-in `Image` which optimize the image automatically, but it must contain the height and width props.
+We must whitelist domain before using the Image component, Image component will fetch the image and make the optimization
+
+```js
+module.exports = {
+  //....
+  images: {
+    deviceSizes: [320, 600, 750, 1080],
+    domains: ["localhost", "127.0.0.1"],
+  },
+};
+```
+
+Here is the jsx of image component
+
+```jsx
+<Image
+  className="w-80"
+  src={url}
+  alt=""
+  width={320}
+  height={240}
+  quality={90}
+  placeholder="blur"
+  blurDataURL={base64}
+  priority={id < 7 ? true : false}
+  layout="fixed"
+/>
+```
+
+some common props and there uses
+
+- `quality`: image quality 1 to 100,default is 75,
+- `priority`:true/false, default false. when false it will be lazy loading. when true it will be added in pre-load meta and load immediately.You should use it on any image that is on Largest Contentful paint.
+- `placeholder`:`blur`/`empty`,default is `empty`, If the image is from local file then next will generate the placeholder automatically.
+- `blurDataURL`: must be base64 encoded image and must `placeholder` is set to `blur`
+- `layout`:
+
+### Layout
+
+The layout behavior of the image as the viewport changes size.
+
+| layout                | Behavior                                               | srcSet                                                             | sizes |
+| --------------------- | ------------------------------------------------------ | ------------------------------------------------------------------ | ----- |
+| `intrinsic` (default) | Scale down to fit width of container, up to image size | 1x, 2x (based on imageSizes)                                       | N/A   |
+| `fixed`               | Sized to width and height exactly.                     | 1x, 2x (based on imageSizes)                                       | N/A   |
+| `responsive`          | Scale to fit width of container                        | 640w, 750w, ... 2048w, 3840w (based on imageSizes and deviceSizes) | 100vw |
+| `fill`                | Grow in both X and Y axes to fill container            | 640w, 750w, ... 2048w, 3840w (based on imageSizes and deviceSizes) | 100vw |
+
+After that installed image optimization package `sharp`, it it recommended by the next-js for production and i used it to generate blur image for Image component.
+image lib file i used for generating blur image
+
+```js
+import sharp from "sharp";
+async function generateImageBlur(url) {
+  const imageBuffer = await fetch(url)
+    .then((res) => res.buffer())
+    .then((buffer) => {
+      return sharp(buffer).resize({ width: 16 }).webp().toBuffer();
+    })
+    .catch((err) => {
+      console.log(`Couldn't process: ${err}`);
+    });
+  const imageBase64 =
+    "data:image/webp;base64," + imageBuffer.toString("base64");
+  return imageBase64;
+}
+
+export async function addImageOptimization(
+  items,
+  largestContentfulPaintAmount
+) {
+  const optItems = [...items];
+
+  const imageProps = {
+    placeholder: false,
+    blurDataURL: false,
+    priority: true,
+  };
+  for (let index = 0; optItems.length > index; index++) {
+    optItems[index].imageProps = imageProps;
+    if (index >= largestContentfulPaintAmount) {
+      const blurDataURL = await generateImageBlur(optItems[index].url);
+      optItems[index].imageProps = {
+        placeholder: "blur",
+        blurDataURL: blurDataURL,
+        priority: false,
+      };
+    }
+  }
+  return optItems;
+}
+```
+
+here i took the number of images that are on `largest contentful paint`, means those are LCP will add priority and those are not will add the optimization.
+**Note: sharp is node only package, cannot run inside browser. my code was failing, but after lot of testing i could solve this. by adding this line to `package.json`**
+
+```json
+{
+  //....
+  "browser": {
+    "sharp": false
+  }
+}
+```
+
+By adding `"browser": { "sharp":false }` i manage to run the programme again.
+**Note: For Image component there can be a race condition, because of that image will not load in the browser. So i need to use the canary version of next,`npm i next@canary`**
+
+Difference in priority and optimized image
+
+1. priority
+   ```html
+   <head>
+     <link
+       rel="preload"
+       as="image"
+       imagesrcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Fzz_plant_f67237012f_b94a088c46.jpg&amp;w=320&amp;q=90 1x, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Fzz_plant_f67237012f_b94a088c46.jpg&amp;w=750&amp;q=90 2x"
+     />
+   </head>
+   <body>
+     <span
+       style="box-sizing:border-box;display:inline-block;overflow:hidden;width:320px;height:240px;background:none;opacity:1;border:0;margin:0;padding:0;position:relative"
+       ><img
+         alt=""
+         srcset="
+           /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Fzz_plant_f67237012f_b94a088c46.jpg&amp;w=320&amp;q=90 1x,
+           /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Fzz_plant_f67237012f_b94a088c46.jpg&amp;w=750&amp;q=90 2x
+         "
+         src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Fzz_plant_f67237012f_b94a088c46.jpg&amp;w=750&amp;q=90"
+         decoding="async"
+         data-nimg="fixed"
+         class="w-80"
+         style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%"
+     /></span>
+   </body>
+   ```
+2. optimized
+   ```html
+   <span
+     style="box-sizing:border-box;display:inline-block;overflow:hidden;width:320px;height:240px;background:none;opacity:1;border:0;margin:0;padding:0;position:relative"
+     ><img
+       alt=""
+       src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+       decoding="async"
+       data-nimg="fixed"
+       class="w-80"
+       style='position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;filter:blur(20px);background-size:cover;background-image:url("data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAACwAgCdASoQAAwAAUAmJbACdAYrv5V9C3/SDhgDRQAA/vZ8Fyyf/v7qqDyvwIvfWFK6wz98dvvunbbn0vHoLdv8etSqQH+XdXDvJJ5RWZkQsCr9+gJbvVWbuXlsi+oCaYfnvXWPIr5nsn/7hWCj+SZGBfzUfeXjAbghH3Jy+0+/W/3ElPza4o17j6UfgF1rc80Y+ETnT2WfWo9VKHcBDbMiMUI/4wO0BTDJ4e1aq3M/+kuwNb18u9CRq4pcAA==");background-position:0% 0%' /><noscript
+       ><img
+         alt=""
+         srcset="
+           /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Faloe_vera_3b8dc523d2_eb110c1fb5.jpg&amp;w=320&amp;q=90 1x,
+           /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Faloe_vera_3b8dc523d2_eb110c1fb5.jpg&amp;w=750&amp;q=90 2x
+         "
+         src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fuploads%2Faloe_vera_3b8dc523d2_eb110c1fb5.jpg&amp;w=750&amp;q=90"
+         decoding="async"
+         data-nimg="fixed"
+         style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%"
+         class="w-80"
+         loading="lazy" /></noscript
+   ></span>
+   ```

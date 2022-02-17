@@ -40,6 +40,6 @@ function stripProductsDetails(product) {
     id,
     title,
     price: "$" + price.toFixed(2),
-    url: "http://localhost:1337" + url,
+    url: CMS_URL + url,
   };
 }
