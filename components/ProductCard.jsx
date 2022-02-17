@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { imageBlur } from "../lib/image";
+import OptImage from "./OptImage";
 
 export default function ProductCard({
   product: { id, title, price, url, imageProps },
@@ -11,20 +12,11 @@ export default function ProductCard({
     <li className="border shadow hover:shadow-xl mx-auto ">
       <Link href={`/products/${id}`}>
         <a>
-          <Image
-            className="w-80"
+          <OptImage
             src={url}
-            alt=""
             width={320}
             height={240}
-            quality={90}
-            {...imageProps}
-            // placeholder="blur"
-            // blurDataURL={base64}
-            // priority={id < 7 ? true : false}
-            // layout="responsive"
-            // placeholder="blur"
-            layout="fixed"
+            imageProps={imageProps}
           />
           <header className="p-2 flex justify-between items-baseline">
             <h2 className="text-lg font-semibold">{title}</h2>
