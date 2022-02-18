@@ -1,5 +1,5 @@
 {
-  "name": "next-shop-backend",
+  "name": "next-shop-strapi",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -11,16 +11,16 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.0.7",
-    "@strapi/plugin-users-permissions": "4.0.7",
-    "@strapi/plugin-i18n": "4.0.7",
+    "@strapi/strapi": "4.1.0",
+    "@strapi/plugin-users-permissions": "4.1.0",
+    "@strapi/plugin-i18n": "4.1.0",
     "sqlite3": "5.0.2"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "19f1b704-a91c-4c0d-b5fa-b941e6f8073c"
+    "uuid": "9906ece3-2dea-4ee4-adbf-201881b4f8ef"
   },
   "engines": {
     "node": ">=12.x.x <=16.x.x",

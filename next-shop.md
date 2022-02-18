@@ -776,3 +776,11 @@ added this jsx for responsive style
 ```
 
 Fixed data structure of single product details to use the `addImageOptimization`
+
+# 10 Authentication
+
+## 002. Strapi new setup
+
+Strapi needs node 16 lts, latest version was giving 500 server error when using auth
+
+## 001. Strapi authentication
