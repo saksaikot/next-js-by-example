@@ -1101,3 +1101,41 @@ export default async function loginHandler(req, res) {
   }
 }
 ```
+
+## 009 Setting a Cookie
+
+added code to set the cookie from server,when sending the res object we can use `setHeader(key_name,value)`, and since cookie needs a specific format we can use npm cookie library to serialize our information.
+we set `Set-Cookie` as key, and the cookie information in `cookie.serialize`,in cookie serialize we set name of the key `jwt`, its value and the options, `path:"/api"` the paths it will include the cookie, `httpOnly`- no javascript access,`maxAge`: expires time
+
+```js
+return res
+  .status(200)
+  .setHeader(
+    "Set-Cookie",
+    cookie.serialize("jwt", jwt, {
+      path: "/api",
+      httpOnly: true,
+      maxAge: WEEK_IN_SECONDS,
+    })
+  )
+  .json({ id, name: username });
+```
+
+now if we make the request then we can get this type of response
+
+```http
+HTTP/1.1 200 OK
+Set-Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1Mjg5Njg2LCJleHAiOjE2NDc4ODE2ODZ9.XONVKvB9t2yWCGK__zmtp2oyhH38rkzt3_NaqiaGac0; Max-Age=604800; Path=/api; HttpOnly
+Content-Type: application/json; charset=utf-8
+ETag: "17-GhLOWuPAeQJsneKlLNER/m0FfCI"
+Content-Length: 23
+Vary: Accept-Encoding
+Date: Sat, 19 Feb 2022 16:54:46 GMT
+Connection: close
+
+{
+  "id": 3,
+  "name": "alice"
+}
+
+```
