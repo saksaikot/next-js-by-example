@@ -3,13 +3,26 @@ GET http://localhost:1337/api/products/?populate=picture
 GET http://localhost:1337/api/products/1?populate=picture
 ###
 GET http://127.0.0.1:1337/api/cart-items
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1MjE0NjAzLCJleHAiOjE2NDc4MDY2MDN9.BENiDZQXzMbiVUVoQ3b5NKV_SalqR0UwMc2p8ri3mxE
+###
+GET http://127.0.0.1:1337/api/users/me
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1MjE0NjAzLCJleHAiOjE2NDc4MDY2MDN9.BENiDZQXzMbiVUVoQ3b5NKV_SalqR0UwMc2p8ri3mxE
 ###
 POST http://localhost:1337/api/auth/local
 Content-Type: application/json
 
 {
-  "identifier":"test",
-  "password":"111111"
+  "identifier":"alice",
+  "password":"Alice123"
+}
+###
+POST http://localhost:1337/api/auth/local/register
+Content-Type: application/json
+
+{
+  "username":"charlie2",
+  "email":"charlie2@email.com",
+  "password":"Charlie2123"
 }
 ###
 GET http://localhost:3000/api/products
