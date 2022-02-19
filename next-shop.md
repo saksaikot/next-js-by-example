@@ -925,3 +925,60 @@ since we are using same structure it will be good to have a common page componen
 
 here in the `Title` we append our app name with title, it help in seo.
 now we use this page component in `index.jsx` and `[id].jsx` of product page. and finally add the sign-in page, sign-in page is blank page using the `Page` component for now.
+
+## 003. Sign In Form
+
+To create signin form we created the component needed for the form
+`sign-in.jsx`
+
+```jsx
+<Page title="Sign in">
+  <form>
+    <Label label="Email">
+      <Input type="text" />
+    </Label>
+    <Label label="Password">
+      <Input type="Password" />
+    </Label>
+    <Button type="submit">Submit</Button>
+  </form>
+</Page>
+```
+
+`Input.jsx`
+
+```jsx
+<input className="border rounded px-2 py-1 w-80" type={type} />
+```
+
+`Label.jsx`
+
+```jsx
+<label className="block my-2">
+  <span className="block my-1 text-gray-700">{label}</span>
+  {children}
+</label>
+```
+
+`button.jsx`
+
+```jsx
+<button
+  className="bg-green-800 text-gray-200 rounded px-4 py-2 hover:bg-green-700 my-2"
+  type={type}
+>
+  {children}
+</button>
+```
+
+Tailwind notes:
+**background color**:
+bg-color_name-[100 to 900], from light to dark
+**text color**
+instead of bg its text,
+text-color_name-[100 to 900]
+**hover state** just add `hover:` suffix,
+border for add border, `rounded` for rounded border
+
+p for padding , py for top and bottom, py-[number]
+m for margin
