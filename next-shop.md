@@ -784,3 +784,125 @@ Fixed data structure of single product details to use the `addImageOptimization`
 Strapi needs node 16 lts, latest version was giving 500 server error when using auth
 
 ## 001. Strapi authentication
+
+Created new Strapi project `next-shop-strapi`,having problem with auth, i was getting 500 server error. It was due to using the latest node 17 version, but using node 16 lts solve that problem,in the new `next-shop-strapi` i removed .db,.sqlite.,.sqlite3 and public folder, so that my project is saved to git. to reinstall the project just download the `next-shop-strapi` branch, and add the .env file.
+
+```env
+APP_KEYS=KEY1,KEY2,KEY3,KEY4
+JWT_SECRET=JWT_SECRET_KEY
+API_TOKEN_SALT=Salt
+DATABASE_FILENAME=.data/database.sqlite3
+
+```
+
+Now we will see how authentication works in strapi.
+To **register a new user** we need to make `POST` request to this endpoint `http://localhost:1337/api/auth/local/register`, with `Content-Type: application/json` and json data of `username`,`email`,`password`
+
+```http
+POST http://localhost:1337/api/auth/local/register
+Content-Type: application/json
+
+{
+  "username":"charlie2",
+  "email":"charlie2@email.com",
+  "password":"Charlie2123"
+}
+```
+
+and the response will be
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjQ1MjUzNjcwLCJleHAiOjE2NDc4NDU2NzB9.Dz-DLDNZL0smMVdFMR9zdup6FuoHD4Uh5G5Hm0oUFwA",
+  "user": {
+    "id": 5,
+    "username": "charlie2",
+    "email": "charlie2@email.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2022-02-19T06:54:30.162Z",
+    "updatedAt": "2022-02-19T06:54:30.162Z"
+  }
+}
+```
+
+To authenticate user
+
+```http
+POST http://localhost:1337/api/auth/local
+Content-Type: application/json
+
+{
+  "identifier":"alice",
+  "password":"Alice123"
+}
+
+```
+
+Response
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1MjUzNzUzLCJleHAiOjE2NDc4NDU3NTN9.pmr5bveN2kUGfRXMY4XeofPmFkGk0oyF7wqORAIUTo0",
+  "user": {
+    "id": 3,
+    "username": "alice",
+    "email": "alice@email.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2022-02-18T19:35:57.193Z",
+    "updatedAt": "2022-02-18T19:35:57.193Z"
+  }
+}
+```
+
+here we can see that the registration and login response is same.
+
+to get cart-items as authenticate user
+
+```http
+GET http://127.0.0.1:1337/api/cart-items
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1MjE0NjAzLCJleHAiOjE2NDc4MDY2MDN9.BENiDZQXzMbiVUVoQ3b5NKV_SalqR0UwMc2p8ri3mxE
+
+```
+
+response
+
+```json
+{
+  "data": [],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 0,
+      "total": 0
+    }
+  }
+}
+```
+
+to get information about authenticated user
+
+```http
+GET http://127.0.0.1:1337/api/users/me
+Authorization:  Bearer JWT_TOKEN
+
+```
+
+response
+
+```json
+{
+  "id": 3,
+  "username": "alice",
+  "email": "alice@email.com",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2022-02-18T19:35:57.193Z",
+  "updatedAt": "2022-02-18T19:35:57.193Z"
+}
+```
