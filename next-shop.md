@@ -1037,3 +1037,34 @@ const [status, setStatus] = useState({ loading: false, error: false });
   Submit
 </Button>;
 ```
+
+## 007. Api route with POST
+
+Now that we have jwt token, we can store it and use it when we need a authenticated endpoint. There are two ways we can store this information, `localStorage` and cookie stored by the server setting `httpOnly`. Using cooking option our data is more secure, cause it will not accessed by any javascript.We already show next-js api route. but now we will try to implement the post request, the post request we can check if `req.method==='POST'`.
+
+```http
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email":"alice@email.com",
+  "password":"Alice123"
+}
+
+```
+
+Response for POST request
+
+```json
+{}
+```
+
+and in the console we get the data `{ email: 'alice@email.com', password: 'Alice123' }`
+Response for GET request
+
+```http
+HTTP/1.1 405 Method Not Allowed
+Date: Sat, 19 Feb 2022 14:29:58 GMT
+Connection: close
+Transfer-Encoding: chunked
+```
