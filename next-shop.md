@@ -982,3 +982,22 @@ border for add border, `rounded` for rounded border
 
 p for padding , py for top and bottom, py-[number]
 m for margin
+
+## 004 from state and validation
+
+now we need to make the button perform an action. To get the value we used `useRef(null)`, but if we pass the ref inside child then we need to use the forwardRef function.
+We also make the Input fields required and attached the onSubmit handler
+to get the value from useRef `const email=emailRef.current.value`
+new updated Input component.
+
+```jsx
+import React, { forwardRef } from "react";
+
+const Input = forwardRef((props, ref) => {
+  return (
+    <input className="border rounded px-2 py-1 w-80" {...props} ref={ref} />
+  );
+});
+
+export default Input;
+```
