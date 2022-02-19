@@ -1139,3 +1139,36 @@ Connection: close
 }
 
 ```
+
+## 010 NavBar with Authentication
+
+added Navbar and dummy user object,
+
+```jsx
+const user = undefined;
+return (
+  <nav className="py-3 px-2">
+    <ul className="flex justify-between">
+      <li className=" text-lg font-semibold">
+        <Link href="/">
+          <a>Next Shop</a>
+        </Link>
+      </li>
+      {user ? (
+        <li>
+          <span className="mr-3">{user}</span>
+          <span>
+            <button>Sign out</button>
+          </span>
+        </li>
+      ) : (
+        <li>
+          <Link href="/sign-in">
+            <a>Sign in</a>
+          </Link>
+        </li>
+      )}
+    </ul>
+  </nav>
+);
+```

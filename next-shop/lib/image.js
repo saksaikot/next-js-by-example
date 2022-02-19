@@ -19,20 +19,21 @@ export async function addImageOptimization(
 ) {
   const optItems = [...items];
 
-  const imageProps = {
-    placeholder: false,
-    blurDataURL: false,
-    priority: true,
-  };
+  // const imageProps = {
+  //   placeholder: false,
+  //   blurDataURL: false,
+  //   priority: true,
+  // };
   for (let index = 0; optItems.length > index; index++) {
-    optItems[index].imageProps = imageProps;
+    // optItems[index].imageProps = imageProps;
+    const blurDataURL = await generateImageBlur(optItems[index].url);
+    optItems[index].imageProps = {
+      placeholder: "blur",
+      blurDataURL: blurDataURL,
+      priority: true,
+    };
     if (index >= largestContentfulPaintAmount) {
-      const blurDataURL = await generateImageBlur(optItems[index].url);
-      optItems[index].imageProps = {
-        placeholder: "blur",
-        blurDataURL: blurDataURL,
-        priority: false,
-      };
+      optItems[index].imageProps.priority = false;
     }
   }
   return optItems;

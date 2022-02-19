@@ -20,7 +20,7 @@ export default function Home({ products }) {
   // console.log("[Home] - products ", products);
   return (
     <Page title="Indoor plants">
-      <ul className="grid grid-cols-1 md:grid-cols-[repeat(2,20rem)] lg:grid-cols-[repeat(3,20rem)] gap-8 justify-center">
+      <ul className="grid grid-cols-1 md:grid-cols-[repeat(2,20rem)] lg:grid-cols-[repeat(3,20rem)] gap-2 justify-start md:justify-between lg:justify-start">
         {products.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}

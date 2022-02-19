@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import NavBar from "./NavBar";
 import Title from "./Title";
 
 export default function Page({ title, children }) {
@@ -8,7 +9,10 @@ export default function Page({ title, children }) {
       <Head>
         <title>{title} - Next-Shop</title>
       </Head>
-      <main className="p-3">
+      <header>
+        <NavBar />
+      </header>
+      <main className="p-3 lg:max-w-5xl md:max-w-3xl m-auto">
         <Title>{title}</Title>
         {children}
       </main>
