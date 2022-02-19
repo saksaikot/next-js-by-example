@@ -1001,3 +1001,23 @@ const Input = forwardRef((props, ref) => {
 
 export default Input;
 ```
+
+## 005. Sign-in API request
+
+we make changes in fetchJson function to accept a second parameter names `options`, which we can pass in fetch to have other options, ie POST request, adding header and body.
+then we send the sign in request to strapi auth endpoint, but if we send incorrect details then we get a error which is not handled by our app,
+
+```js
+export async function fetchJson(url, options) {
+  const response = await fetch(url, options);
+  //....
+}
+```
+
+```js
+const response = await fetchJson(`http://127.0.0.1:1337/api/auth/local`, {
+  method: "POST",
+  headers: { "Content-type": "application/json" },
+  body: JSON.stringify({ identifier, password }),
+});
+```
