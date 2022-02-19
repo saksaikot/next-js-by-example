@@ -12,13 +12,13 @@ export default function Signin() {
   const handleOnsubmit = async (event) => {
     event.preventDefault();
     setStatus({ loading: true, error: false });
-    const identifier = emailRef.current.value;
+    const email = emailRef.current.value;
     const password = passwordRef.current.value;
     try {
-      const response = await fetchJson(`http://127.0.0.1:1337/api/auth/local`, {
+      const response = await fetchJson(`/api/login`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ identifier, password }),
+        body: JSON.stringify({ email, password }),
       });
       setStatus({ loading: false, error: false });
 
