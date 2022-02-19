@@ -1021,3 +1021,19 @@ const response = await fetchJson(`http://127.0.0.1:1337/api/auth/local`, {
   body: JSON.stringify({ identifier, password }),
 });
 ```
+
+## 006. Error and Loading stats
+
+used try and catch to handle the exception, added Error and Loading state to maintain the status,
+
+```jsx
+const [status, setStatus] = useState({ loading: false, error: false });
+//...
+{
+  error && <p className="text-red-500">Invalid credential!!!</p>;
+}
+
+<Button type="submit" disabled={!loading}>
+  Submit
+</Button>;
+```
