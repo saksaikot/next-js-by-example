@@ -19,7 +19,7 @@ export async function getProductDetails(id) {
   return {
     title,
     description,
-    price,
+    price: "$" + price.toFixed(2),
     url: CMS_URL + url,
     picture: {
       width,

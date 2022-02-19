@@ -1,7 +1,5 @@
-import Head from "next/head";
-import Link from "next/link";
+import Page from "../components/Page";
 import ProductCard from "../components/ProductCard";
-import Title from "../components/Title";
 import { addImageOptimization } from "../lib/image";
 import { getProducts } from "../lib/product";
 
@@ -21,18 +19,12 @@ export async function getStaticProps() {
 export default function Home({ products }) {
   // console.log("[Home] - products ", products);
   return (
-    <>
-      <Head>
-        <title>Next-Shop</title>
-      </Head>
-      <main className="p-3">
-        <Title>Next Shop</Title>
-        <ul className="grid grid-cols-1 md:grid-cols-[repeat(2,20rem)] lg:grid-cols-[repeat(3,20rem)] gap-8 justify-center">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </ul>
-      </main>
-    </>
+    <Page title="Indoor plants">
+      <ul className="grid grid-cols-1 md:grid-cols-[repeat(2,20rem)] lg:grid-cols-[repeat(3,20rem)] gap-8 justify-center">
+        {products.map((product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
+      </ul>
+    </Page>
   );
 }

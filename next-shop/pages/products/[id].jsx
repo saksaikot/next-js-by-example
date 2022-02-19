@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import OptImage from "../../components/OptImage";
+import Page from "../../components/Page";
 import Title from "../../components/Title";
 import { ApiError } from "../../lib/api";
 import { addImageOptimization } from "../../lib/image";
@@ -36,40 +37,28 @@ export async function getStaticProps({ params: { id } }) {
 export default function Product({ product }) {
   const { title, description, price, url, imageProps } = product;
   return (
-    <>
-      <Head>
-        <title>Next-Shop</title>
-      </Head>
-      <main className="p-3">
-        <article>
-          <header>
-            <Title>{title}</Title>
-          </header>
-          <main>
-            <section className="flex flex-col md:flex-row gap-2 justify-between">
-              <div className="w-full">
-                <OptImage
-                  src={url}
-                  width={640}
-                  height={480}
-                  imageProps={imageProps}
-                />
-              </div>
-              <main className="flex-1">
-                <p className="">{description}</p>
-                <footer className="text-lg font-medium mt-3">
-                  <p>{price}</p>
-                </footer>
-              </main>
-            </section>
-            <style jsx>{`
-              section > * {
-                flex-basis: 100%;
-              }
-            `}</style>
-          </main>
+    <Page title={title}>
+      <section className="flex flex-col md:flex-row gap-2 justify-between">
+        <div className="w-full">
+          <OptImage
+            src={url}
+            width={640}
+            height={480}
+            imageProps={imageProps}
+          />
+        </div>
+        <article className="flex-1">
+          <p className="">{description}</p>
+          <footer className="text-lg font-semibold mt-3">
+            <p>{price}</p>
+          </footer>
         </article>
-      </main>
-    </>
+      </section>
+      <style jsx>{`
+        section > * {
+          flex-basis: 100%;
+        }
+      `}</style>
+    </Page>
   );
 }

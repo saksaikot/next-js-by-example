@@ -906,3 +906,22 @@ response
   "updatedAt": "2022-02-18T19:35:57.193Z"
 }
 ```
+
+## 002. Common Page Component
+
+since we are using same structure it will be good to have a common page component.The page component will have a title props and children props,
+
+```jsx
+<>
+  <Head>
+    <title>{title} - Next-Shop</title>
+  </Head>
+  <main className="p-3">
+    <Title>{title}</Title>
+    {children}
+  </main>
+</>
+```
+
+here in the `Title` we append our app name with title, it help in seo.
+now we use this page component in `index.jsx` and `[id].jsx` of product page. and finally add the sign-in page, sign-in page is blank page using the `Page` component for now.
