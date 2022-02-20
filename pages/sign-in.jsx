@@ -4,9 +4,11 @@ import Input from "../components/Input";
 import Label from "../components/Label";
 import Page from "../components/Page";
 import { fetchJson } from "../lib/api.js";
+import { useRouter } from "next/router";
 
 export default function Signin() {
   const [status, setStatus] = useState({ loading: false, error: false });
+  const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const handleOnsubmit = async (event) => {
@@ -21,7 +23,7 @@ export default function Signin() {
         body: JSON.stringify({ email, password }),
       });
       setStatus({ loading: false, error: false });
-
+      router.push("/");
       console.log("signin response", response);
     } catch (error) {
       setStatus({ loading: false, error: true });

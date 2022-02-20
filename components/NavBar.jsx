@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { fetchJson } from "../lib/api";
 export default function NavBar() {
-  const user = undefined;
+  const [user, setUser] = useState();
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetchJson("/api/user");
+        setUser(response);
+      } catch (error) {}
+    })();
+  }, []);
   return (
     <nav className="py-3 px-2">
       <ul className="flex justify-between">
@@ -12,7 +21,7 @@ export default function NavBar() {
         </li>
         {user ? (
           <li>
-            <span className="mr-3">{user}</span>
+            <span className="mr-3">{user.name}</span>
             <span>
               <button>Sign out</button>
             </span>
