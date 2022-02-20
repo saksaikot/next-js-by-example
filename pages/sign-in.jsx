@@ -5,31 +5,33 @@ import Label from "../components/Label";
 import Page from "../components/Page";
 import { fetchJson } from "../lib/api.js";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
 
 export default function Signin() {
-  const [status, setStatus] = useState({ loading: false, error: false });
   const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const handleOnsubmit = async (event) => {
-    event.preventDefault();
-    setStatus({ loading: true, error: false });
+  const signinMutation = useMutation(async () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const user = await fetchJson(`/api/login`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  });
+  const handleOnsubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetchJson(`/api/login`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      setStatus({ loading: false, error: false });
+      const user = await signinMutation.mutateAsync();
+
       router.push("/");
-      console.log("signin response", response);
+      console.log("signin response", user);
     } catch (error) {
-      setStatus({ loading: false, error: true });
+      //isError in signinMutation
     }
   };
-  const { loading, error } = status;
+  const { isloading: loading, isError: error } = signinMutation;
   return (
     <Page title="Sign in">
       <form onSubmit={handleOnsubmit}>
