@@ -1260,3 +1260,36 @@ const handleSignOut = async () => {
   setUser(undefined);
 };
 ```
+
+# 11 React Query
+
+## 001 Why React Query
+
+In our app there are some limitation,
+
+1. Navbar requesting user data on every page
+2. we cannot access the user data on other component
+3. every time we make a request to our api it will require error and loading state.
+
+To solve this type of problem with other improvement feature, we have SWR and React query
+
+1. SWR: Stale While Revalidate, is develop by same next-js company.
+2. React-query: Now it is a popular alternative. [website](https://react-query.tanstack.com/). From their site, react query is for- fetch, cache and update data for react and react-native application, without touching any global state. Advantages-
+   - caching
+   - deduplication multiple request into single request
+   - updating out of date data
+   - knowing when the data out of date
+   - performance optimization
+   - managing memory
+   - memorizing query result
+
+we will use react query,it is a data caching system
+**how to setup for react query?**
+
+1. 'npm i react-query'
+2. setup the global `_app.jsx` page
+   1. import `QueryClient`,`QueryClientProvider`, `import {QueryClient,QueryClientProvider} from 'react-query'`
+   2. create queryClient object,`const queryClient=new QueryClient();`
+   3. wrap everything with QueryClientProvider with client `<QueryClientProvider client={queryClient}>...</QueryClientProvider>`
+
+It will set our next-js app to use the react-query
