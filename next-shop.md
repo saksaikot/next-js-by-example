@@ -1193,3 +1193,40 @@ try {
   return res.status(error.status).end;
 }
 ```
+
+## 012. Loading user data
+
+we can use `useState` and `useEffect` to load the data from user api and also can use `useRouter` from `next/router` to redirect from sign in page
+To redirect from a page
+
+```jsx
+import {useRouter} from "next/router";
+{
+  const router=useRouter();
+
+  //
+  now redirect
+  router.push("/");//location of the path
+}
+
+```
+
+**Note:the router object has other methods.**
+Now loading the user data
+
+```jsx
+const [user, setUser] = useState();
+useEffect(() => {
+  (async () => {
+    try {
+      const response = await fetchJson("/api/user");
+      setUser(response);
+    } catch (error) {}
+  })();
+}, []);
+//.....
+<span className="mr-3">{user.name}</span>;
+//....
+```
+
+Now that we can get the user details and we are using useEffect and the NavBar component is in all pages, so every time we load a page it will get the user details again.To solve the problem we will use cache to store user information.
