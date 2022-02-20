@@ -1293,3 +1293,41 @@ we will use react query,it is a data caching system
    3. wrap everything with QueryClientProvider with client `<QueryClientProvider client={queryClient}>...</QueryClientProvider>`
 
 It will set our next-js app to use the react-query
+
+## 002. useQuery hook,
+
+first import the useQuery from react-query,`import {useQuery} from 'react-query'`
+
+useQuery accept 3 parameters, 1st key, 2nd the value function, 3rd options.
+our used code is
+
+```js
+const { data: user } = useQuery(
+  "user",
+  async () => {
+    try {
+      const response = await fetchJson("/api/user");
+      return response;
+    } catch (error) {
+      return undefined;
+    }
+  },
+  {
+    staleTime: FIVE_MINUTES,
+    cacheTime: Infinity,
+  }
+);
+```
+
+Here we just returned the user value,
+useQuery options- there are many options, but we used-
+`staleTime`: time to expires the data, when the expires time pass,the data is set to be revalidated. Is it not do it exactly after staleTime, the revalidation done after next page request or focus window change.
+`cacheTime`: the time data should be in memory, default is 5 minutes, here we set it `Infinity`, which means keep the data as long as possible.
+
+Note: if there is no options defined then the default options is passed, from the default options there are two we need to know-
+
+1. `staleTime`: default time is 0, means revalidate on every request
+2. `refetchOnWindowFocus`: default is true. it will revalidate the data on window focus.
+   Thats why when is no option is provided then react-query will do more request to api
+
+Note: there are other options available that will be helpful in case of feature like messenger.
