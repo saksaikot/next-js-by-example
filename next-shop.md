@@ -1331,3 +1331,37 @@ Note: if there is no options defined then the default options is passed, from th
    Thats why when is no option is provided then react-query will do more request to api
 
 Note: there are other options available that will be helpful in case of feature like messenger.
+
+## 003. useUser custom hooks
+
+what is custom hook?
+Custom hooks are a way of reusing stateful login, separate component calling same custom hook are isolated, so there state can be deferent.
+We already used the custom hook useQuery, but we used it get user data, but if we need the user data elsewhere we need to use same code, instead we can make our own custom hook, the name of the custom hook is start with `use`, for our case we named our function `useUser` which return the value of user.
+
+```js
+import { useQuery } from "react-query";
+import { fetchJson } from "../lib/api";
+const FIVE_MINUTES = 60 * 5 * 100;
+
+export function useUser() {
+  const { data: user } = useQuery(
+    "user",
+    async () => {
+      try {
+        const response = await fetchJson("/api/user");
+        return response;
+      } catch (error) {
+        return undefined;
+      }
+    },
+    {
+      staleTime: FIVE_MINUTES,
+      cacheTime: Infinity,
+    }
+  );
+  return user;
+}
+```
+
+by using this hook we can now use the user in any component.
+**Note: i make the header sticky, by adding `position:sticky,top:0,background-color:white,z-index:10`**
