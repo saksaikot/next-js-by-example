@@ -24,6 +24,14 @@ Content-Type: application/json
   "password":"Alice123"
 }
 ###
+GET  http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "email":"alice@email.com",
+  "password":"Alice123"
+}
+###
 POST http://localhost:1337/api/auth/local/register
 Content-Type: application/json
 
