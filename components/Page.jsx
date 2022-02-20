@@ -9,7 +9,7 @@ export default function Page({ title, children }) {
       <Head>
         <title>{title} - Next-Shop</title>
       </Head>
-      <header>
+      <header className="sticky top-0 bg-white z-10">
         <NavBar />
       </header>
       <main className="p-3 lg:max-w-5xl md:max-w-3xl m-auto">
