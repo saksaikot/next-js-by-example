@@ -1365,3 +1365,34 @@ export function useUser() {
 
 by using this hook we can now use the user in any component.
 **Note: i make the header sticky, by adding `position:sticky,top:0,background-color:white,z-index:10`**
+
+## 004. useMutation Hook
+
+we can use useMutation hook when we generally perform `POST/PUT/PATCH/DELETE` request, that is when the server is doing something,unlike useQuery executed and cached immediately, useMutation need to be called.
+Note: hooks needs be inside react component.
+code example
+
+```js
+const signinMutation = useMutation(async () => {
+  const email = emailRef.current.value;
+  const password = passwordRef.current.value;
+  const user = await fetchJson(`/api/login`, {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+});
+const handleOnsubmit = async (event) => {
+  event.preventDefault();
+  try {
+    const user = await signinMutation.mutateAsync();
+    router.push("/");
+    console.log("signin response", user);
+  } catch (error) {
+    //isError in signinMutation
+  }
+};
+const { isloading: loading, isError: error } = signinMutation;
+```
+
+here we passed the function we need to executed inside useMutation, useMutation doesn't cache data, but it main tain the error and loading state, so we don't need to maintain them. then we can call it asynchronously by `mutationObject.mutateAsync()` ;
