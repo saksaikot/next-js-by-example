@@ -1230,3 +1230,33 @@ useEffect(() => {
 ```
 
 Now that we can get the user details and we are using useEffect and the NavBar component is in all pages, so every time we load a page it will get the user details again.To solve the problem we will use cache to store user information.
+
+## 013 Signing out
+
+To logout the user we cannot implement client side code, since the cookie is not accessible from browser.So we need to set it from server. so we make a logout end point where we set the cookie value if `jwt` to empty and make the expires to past date so that browser delete is ASAP.
+
+`logout.js`
+
+```js
+return res
+  .status(200)
+  .setHeader(
+    "Set-Cookie",
+    cookie.serialize("jwt", "", {
+      path: "/api",
+      httpOnly: true,
+      expires: new Date(0),
+    })
+  )
+  .json({});
+```
+
+Now we just add the on click event on sign out button, request the logout endpoint and on successful request set the user value `undefined`
+`NavBar.jsx`
+
+```jsx
+const handleSignOut = async () => {
+  const response = await fetchJson("/api/logout");
+  setUser(undefined);
+};
+```

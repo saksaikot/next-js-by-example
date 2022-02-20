@@ -11,6 +11,10 @@ export default function NavBar() {
       } catch (error) {}
     })();
   }, []);
+  const handleSignOut = async () => {
+    const response = await fetchJson("/api/logout");
+    setUser(undefined);
+  };
   return (
     <nav className="py-3 px-2">
       <ul className="flex justify-between">
@@ -23,7 +27,7 @@ export default function NavBar() {
           <li>
             <span className="mr-3">{user.name}</span>
             <span>
-              <button>Sign out</button>
+              <button onClick={handleSignOut}>Sign out</button>
             </span>
           </li>
         ) : (
