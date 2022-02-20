@@ -1171,4 +1171,25 @@ return (
     </ul>
   </nav>
 );
+Another approach to have space between two inline element `<li role="separator" className="flex-1"></li>`
+```
+
+## 011 User Api route
+
+Now that we have saved our jwt in cookie, but we don't have the user details.To solve that we can make a next-js user api, when we sent a get request to `/api/user` it will get the jwt from cookie and using this jwt it will get the details from CMS, and then it will send user details
+`pages/api/user.js`
+
+```js
+const { jwt } = req.cookies;
+if (!jwt) return res.status(401).end();
+try {
+  const response = await fetchJson(`${CMS_URL}/api/users/me`, {
+    headers: { Authorization: `Bearer ${jwt}` },
+  });
+  // console.log(response);
+  const { id, username: name, email } = response;
+  return res.status(200).json({ id, name, email });
+} catch (error) {
+  return res.status(error.status).end;
+}
 ```
