@@ -18,9 +18,8 @@ export default async function loginHandler(req, res) {
 
     const {
       jwt,
-      user: { id, username },
+      user: { id, username: name },
     } = response;
-    console.log("[loginHandler]", response);
     return res
       .status(200)
       .setHeader(
@@ -31,9 +30,9 @@ export default async function loginHandler(req, res) {
           maxAge: WEEK_IN_SECONDS,
         })
       )
-      .json({ id, name: username });
+      .json({ id, name, email });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(error.status).end();
   }
 }

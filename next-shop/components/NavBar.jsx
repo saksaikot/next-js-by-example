@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { useQueryClient } from "react-query";
 
 import { useUser } from "../hooks/user";
 import { fetchJson } from "../lib/api";
 
 export default function NavBar() {
   const user = useUser();
+  const queryClient = useQueryClient();
   const handleSignOut = async () => {
     const response = await fetchJson("/api/logout");
+    queryClient.setQueryData("user", undefined);
     // setUser(undefined);
   };
   return (

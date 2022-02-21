@@ -1381,6 +1381,7 @@ const signinMutation = useMutation(async () => {
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
+  return user;
 });
 const handleOnsubmit = async (event) => {
   event.preventDefault();
@@ -1395,4 +1396,25 @@ const handleOnsubmit = async (event) => {
 const { isloading: loading, isError: error } = signinMutation;
 ```
 
-here we passed the function we need to executed inside useMutation, useMutation doesn't cache data, but it main tain the error and loading state, so we don't need to maintain them. then we can call it asynchronously by `mutationObject.mutateAsync()` ;
+here we passed the function we need to executed inside `useMutation`, useMutation doesn't cache data, but it main tain the error and loading state, so we don't need to maintain them. then we can call it asynchronously by `mutationObject.mutateAsync()` ;
+
+## 005. Updating the Query cache
+
+to update a query cached data,
+
+1. import useQueryClient `import {useQueryClient} from 'react-query'`
+2. assign to a const, `const queryClient=useQueryClient()`;
+3. set the value, queryClient.setQueryData('KEY',value);
+
+```js
+import { useQueryClient } from "react-query";
+//...
+//inside component
+const queryClient = useQueryClient();
+
+//set the data after successful fetch
+queryClient.setQueryData("user", user);
+```
+
+Using same fixed the logout button,
+**There was a bug, while using the mutation, i did not return a value in `useMutation()`**
