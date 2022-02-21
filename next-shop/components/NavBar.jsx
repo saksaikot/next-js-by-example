@@ -1,17 +1,14 @@
 import Link from "next/link";
 import { useQueryClient } from "react-query";
 
-import { useUser } from "../hooks/user";
-import { fetchJson } from "../lib/api";
+import { useSignOut, useUser } from "../hooks/user";
+// import { fetchJson } from "../lib/api";
 
 export default function NavBar() {
   const user = useUser();
+  const { signOut } = useSignOut();
   const queryClient = useQueryClient();
-  const handleSignOut = async () => {
-    const response = await fetchJson("/api/logout");
-    queryClient.setQueryData("user", undefined);
-    // setUser(undefined);
-  };
+  const handleSignOut = async () => signOut();
   return (
     <nav className="py-3 px-2 shadow-sm ">
       <ul className="flex justify-between">

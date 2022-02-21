@@ -1418,3 +1418,53 @@ queryClient.setQueryData("user", user);
 
 Using same fixed the logout button,
 **There was a bug, while using the mutation, i did not return a value in `useMutation()`**
+
+## 006 useSignIn custom hook
+
+**Note: I was getting error on hook calling, accidentally i called `useSignIn` instead of `signIn`**
+hooks and custom hooks must be called at top of the function.
+
+```js
+export function useSignIn() {
+  const queryClient = useQueryClient();
+
+  const signinMutation = useMutation(async ({ email, password }) => {
+    const user = await fetchJson(`/api/login`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    return user;
+  });
+  return {
+    signInError: signinMutation.isError,
+    signInLoading: signinMutation.isLoading,
+    signIn: async ({ email, password }) => {
+      try {
+        const user = await signinMutation.mutateAsync({ email, password });
+        queryClient.setQueryData("user", user);
+        return user;
+      } catch (error) {
+        return undefined;
+      }
+    },
+  };
+}
+```
+
+## 007. useSignOut custom hook
+
+```js
+export function useSignOut() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(() => fetchJson("/api/logout"));
+  return {
+    signOut: async () => {
+      try {
+        await mutation.mutateAsync();
+        queryClient.setQueryData(USER_QUERY_KEY, undefined);
+      } catch (error) {}
+    },
+  };
+}
+```
