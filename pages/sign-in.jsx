@@ -5,12 +5,14 @@ import Label from "../components/Label";
 import Page from "../components/Page";
 import { fetchJson } from "../lib/api.js";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export default function Signin() {
   const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const queryClient = useQueryClient();
+
   const signinMutation = useMutation(async () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -19,12 +21,14 @@ export default function Signin() {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
+    return user;
   });
   const handleOnsubmit = async (event) => {
     event.preventDefault();
     try {
       const user = await signinMutation.mutateAsync();
-
+      console.log(user);
+      queryClient.setQueryData("user", user);
       router.push("/");
       console.log("signin response", user);
     } catch (error) {
