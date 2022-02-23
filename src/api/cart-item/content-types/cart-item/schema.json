@@ -15,8 +15,7 @@
     "product": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::product.product",
-      "inversedBy": "cart_item"
+      "target": "api::product.product"
     },
     "Quantity": {
       "type": "integer"
@@ -24,8 +23,7 @@
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "cart_item"
+      "target": "plugin::users-permissions.user"
     }
   }
 }
