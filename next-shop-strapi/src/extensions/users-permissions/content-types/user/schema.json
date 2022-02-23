@@ -62,12 +62,6 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
-    },
-    "cart_item": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::cart-item.cart-item",
-      "inversedBy": "users_permissions_user"
     }
   }
 }

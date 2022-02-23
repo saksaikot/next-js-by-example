@@ -1468,3 +1468,7 @@ export function useSignOut() {
   };
 }
 ```
+
+# 12 Shopping Cart (Exercises)
+
+## 001 Cart Items Collection
