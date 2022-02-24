@@ -1,9 +1,15 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
+import { useCartOpen } from "../hooks/pages";
 import NavBar from "./NavBar";
+import SideModal from "./SideModal";
 import Title from "./Title";
 
 export default function Page({ title, children }) {
+  // const [cartOpen, setCartOpen] = useState(false);
+  const isCartOpen = useCartOpen();
+  console.log("[Page][isCartOpen]", isCartOpen);
+
   return (
     <>
       <Head>
@@ -16,6 +22,7 @@ export default function Page({ title, children }) {
         <Title>{title}</Title>
         {children}
       </main>
+      {isCartOpen && <SideModal />}
     </>
   );
 }

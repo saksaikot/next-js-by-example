@@ -26,51 +26,18 @@ module.exports = createCoreController(
     // Method 2: Wrapping a core action (leaves core logic in place)
     async find(ctx) {
       // some custom logic here
-      ctx.query = { ...ctx.query, local: "en" };
+      const user_id = ctx.state.user.id;
+
+      ctx.query = {
+        ...ctx.query,
+        local: "en",
+        "filters[user_id][$eq]": user_id,
+      };
 
       // Calling the default core action
       const { data, meta } = await super.find(ctx);
-      // const result = await strapi.db
-      //   .query("api::cart-item.cart-item")
-      //   .findMany({
-      //     populate: ["product.picture"],
-      //   });
-      // const cartItems = result.map((item) => {
-      //   const {
-      //     id,
-      //     Quantity,
-      //     product,
-      //     product: { title, price, picture },
-      //   } = item;
-      //   const {
-      //     placeholder_webp,
-      //     formats: {
-      //       xsmall: { url },
-      //     },
-      //   } = picture[0];
-      //   // console.log(url);
-      //   return {
-      //     id,
-      //     Quantity,
-      //     title,
-      //     price,
-      //     product: product.id,
-      //     placeholder_webp,
-      //     url,
-      //   };
-      // });
-      const entries = await strapi.db
-        .query("api::cart-item.cart-item")
-        .findMany({
-          where: {
-            user_id: { $eq: ctx.state.user.id },
-          },
-        });
-      console.log(entries);
-      // some more custom logic
-      // meta.date = Date.now();
 
-      return { data: entries, meta };
+      return { data: data, meta };
     },
 
     // Method 3: Replacing a core action

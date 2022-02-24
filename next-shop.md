@@ -1472,3 +1472,10 @@ export function useSignOut() {
 # 12 Shopping Cart (Exercises)
 
 ## 001 Cart Items Collection
+
+Fixed cart-item per user rules
+controller/collection-type.js
+
+## 002. cart item GET next-api
+
+Added internal Get request at `/api/cart-items`
