@@ -17,13 +17,19 @@
       "relation": "oneToOne",
       "target": "api::product.product"
     },
-    "Quantity": {
+    "quantity": {
       "type": "integer"
     },
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "user_id": {
+      "type": "biginteger"
+    },
+    "product_id": {
+      "type": "biginteger"
     }
   }
 }
