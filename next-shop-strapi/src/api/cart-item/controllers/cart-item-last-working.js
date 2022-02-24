@@ -154,6 +154,17 @@ module.exports = createCoreController(
         user_id,
         product_id: data.product,
       };
+
+      const entries = await strapi.db.query(UID).findOne({ where });
+      if (entries) {
+        const updatedEntry = await strapi.db.query(UID).update({
+          where,
+          data: {
+            quantity: data.product.quantity,
+          },
+        });
+      }
+      console.log("[entries]", entries);
       if (!isObject(data)) {
         return ctx.badRequest('Missing "data" payload in the request body');
       }
@@ -164,21 +175,9 @@ module.exports = createCoreController(
         product_id: data.product,
         users_permissions_user: user_id,
       };
-
-      let entity;
-      const oldEntity = await strapi.db.query(UID).findOne({ where });
-      if (oldEntity) {
-        entity = await strapi
-          .service(UID)
-          .update(oldEntity.id, { ...query, data: sanitizedInputData, files });
-      } else {
-        entity = await strapi.service(UID).create({
-          ...query,
-          data: { ...sanitizedInputData, ...extra },
-          files,
-        });
-      }
-
+      const entity = await strapi
+        .service(UID)
+        .create({ ...query, data: { ...sanitizedInputData, ...extra }, files });
       const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
 
       return this.transformResponse(sanitizedEntity);
