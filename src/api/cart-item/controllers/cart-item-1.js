@@ -85,65 +85,6 @@ module.exports = createCoreController(
 
       return this.transformResponse(sanitizedEntity);
     },
-    // async create(ctx) {
-    //   // let entity;
-    //   // const { create } = strapi.db.query("api::cart-item.cart-item");
-    //   // if (ctx.is("multipart")) {
-    //   //   const { data, files } = parseMultipartData(ctx);
-    //   //   // data.user = ctx.state.user.id;
-    //   //   data.user_id = ctx.state.user.id;
-    //   //   data.users_permissions_user = ctx.state.user.id;
-    //   //   entity = await create({ data }, { files });
-    //   // } else {
-    //   //   ctx.request.body.user = ctx.state.user.id;
-    //   //   ctx.request.body.user_id = ctx.state.user.id;
-    //   //   entity = await create(ctx.request.body);
-    //   // }
-    //   // return { data: entity };
-    //   // some logic here
-    //   // ctx.request.body.user = ctx.state.user.id;
-    //   const user_id = ctx.state.user.id;
-    //   const users_permissions_user = user_id;
-    //   // ctx.request.body.data = {
-    //   //   ...ctx.request.body.data,
-    //   //   user_id,
-    //   //   users_permissions_user,
-    //   // };
-    //   // console.log(
-    //   //   ctx.request.body,
-    //   //   typeof ctx.request.body,
-    //   //   "data",
-    //   //   ctx.request.body.data
-    //   // );
-    //   // const response = await super.create(ctx);
-
-    //   if (ctx.is("multipart")) {
-    //     try {
-    //       // console.log("inside try", ctx.request.body.data);
-    //       let data = JSON.parse(ctx.request.body.data);
-    //       const { product } = data;
-    //       data = {
-    //         ...data,
-    //         user_id,
-    //         users_permissions_user,
-    //         user: user_id,
-    //         product_id: product,
-    //       };
-    //       ctx.request.body.data = JSON.stringify(data);
-    //     } catch (error) {
-    //       return ctx.badRequest("'data' field is missing");
-    //     }
-    //   } else {
-    //     ctx.request.body.user_id = user_id;
-    //     ctx.request.body.users_permissions_user = users_permissions_user;
-    //     ctx.request.body.product_id = ctx.request.body.product;
-    //   }
-    //   console.log(ctx.request.body);
-    //   // some more logic
-    //   const response = await super.create(ctx);
-
-    //   return response;
-    // },
     async create(ctx) {
       const UID = "api::cart-item.cart-item";
       const { query } = ctx.request;
@@ -179,6 +120,15 @@ module.exports = createCoreController(
         });
       }
 
+      const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+      return this.transformResponse(sanitizedEntity);
+    },
+    async delete(ctx) {
+      const { id } = ctx.params;
+      const { query } = ctx;
+
+      const entity = await strapi.service(UID).delete(id, query);
       const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
 
       return this.transformResponse(sanitizedEntity);
