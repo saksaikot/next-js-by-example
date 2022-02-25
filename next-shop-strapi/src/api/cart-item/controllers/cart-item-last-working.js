@@ -182,5 +182,21 @@ module.exports = createCoreController(
 
       return this.transformResponse(sanitizedEntity);
     },
+    async delete(ctx) {
+      const { id } = ctx.params;
+      const { query } = ctx;
+      const cartItem = await strapi.services(UID).find({
+        id: ctx.params.id,
+        user_id: ctx.state.user.id,
+      });
+
+      if (!cartItem) {
+        return ctx.unauthorized(`You can't update this entry`);
+      }
+      const entity = await strapi.service(UID).delete(id, query);
+      const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+      return this.transformResponse(sanitizedEntity);
+    },
   })
 );

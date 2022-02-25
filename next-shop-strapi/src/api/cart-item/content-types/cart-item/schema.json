@@ -18,7 +18,10 @@
       "target": "api::product.product"
     },
     "quantity": {
-      "type": "integer"
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
     },
     "users_permissions_user": {
       "type": "relation",
@@ -29,7 +32,9 @@
       "type": "biginteger"
     },
     "product_id": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "required": true,
+      "min": "0"
     }
   }
 }
