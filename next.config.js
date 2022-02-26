@@ -38,9 +38,9 @@ const config = {
     disable: process.env.NODE_ENV === "development",
   },
   headers,
-  modifyURLPrefix: {
-    "../public": "",
-  },
+  // experimental: {
+  //   optimizeCss: true,
+  // },
 
   // reactStrictMode: true,
 };
