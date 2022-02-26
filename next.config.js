@@ -27,7 +27,12 @@ const config = {
   reactStrictMode: true,
   images: {
     deviceSizes: [320, 600, 750, 1080],
-    domains: ["localhost", "127.0.0.1", "next-js-blog-backend.herokuapp.com"],
+    domains: [
+      "localhost",
+      "127.0.0.1",
+      "next-js-blog-backend.herokuapp.com",
+      "next-shop-strapi.herokuapp.com",
+    ],
   },
   // pageExtensions: ["page.js", "page.jsx"],
   pwa: {
