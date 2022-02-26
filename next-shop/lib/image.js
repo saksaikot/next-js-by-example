@@ -13,10 +13,7 @@ async function generateImageBlur(url) {
   return imageBase64;
 }
 
-export async function addImageOptimization(
-  items,
-  largestContentfulPaintAmount
-) {
+export function addImageOptimization(items, largestContentfulPaintAmount = 0) {
   const optItems = [...items];
 
   // const imageProps = {

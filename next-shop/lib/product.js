@@ -17,6 +17,7 @@ export async function getProductDetails(id) {
     attributes: { width, height, caption, url, placeholder_webp },
   } = picture.data[0];
   return {
+    id,
     title,
     description,
     price: "$" + price.toFixed(2),

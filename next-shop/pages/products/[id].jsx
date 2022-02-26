@@ -1,8 +1,11 @@
 import Head from "next/head";
 import React from "react";
+import Button from "../../components/Button";
 import OptImage from "../../components/OptImage";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
+import { useHandleCartItem } from "../../hooks/cart";
+import { useSetCartOpen } from "../../hooks/pages";
 import { useUser } from "../../hooks/user";
 import { ApiError } from "../../lib/api";
 import { addImageOptimization } from "../../lib/image";
@@ -36,8 +39,17 @@ export async function getStaticProps({ params: { id } }) {
 }
 
 export default function Product({ product }) {
-  const { title, description, price, url, imageProps } = product;
+  const { setCartOpen } = useSetCartOpen();
+  const { increase, isSelected } = useHandleCartItem();
+
+  const { id, title, description, price, url, imageProps } = product;
   const user = useUser();
+
+  const handleAddTOCart = () => {
+    console.log("[product]", id);
+    increase(id, undefined);
+    setCartOpen();
+  };
   return (
     <Page title={title}>
       <section className="flex flex-col md:flex-row gap-2 justify-between">
@@ -53,7 +65,13 @@ export default function Product({ product }) {
           <p className="">{description}</p>
           <footer className="text-lg font-semibold mt-3">
             <p>{price}</p>
-            {user && <p>Only for {user.name}!!!</p>}
+            {user && (
+              <>
+                <p>Only for {user.name}!!!</p>{" "}
+                {isSelected(id) && <p>This item is already in cart!!</p>}
+                <Button onClick={handleAddTOCart}>Add to cart</Button>
+              </>
+            )}
           </footer>
         </article>
       </section>
