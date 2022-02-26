@@ -5,14 +5,16 @@ GET http://localhost:1337/api/products/34?populate=picture
 GET http://127.0.0.1:1337/api/cart-items/?populate=product.picture
 Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1NjU0MzA2LCJleHAiOjE2NDgyNDYzMDZ9.ZQEioZyY-N8axr44siZOzoGVfN1JfGNnM9xXdH6-hGw
 ###
+DELETE http://127.0.0.1:1337/api/cart-items/71
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1NjU0MzA2LCJleHAiOjE2NDgyNDYzMDZ9.ZQEioZyY-N8axr44siZOzoGVfN1JfGNnM9xXdH6-hGw
+###
 POST http://127.0.0.1:1337/api/cart-items/
 Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1NjU0MzA2LCJleHAiOjE2NDgyNDYzMDZ9.ZQEioZyY-N8axr44siZOzoGVfN1JfGNnM9xXdH6-hGw
 Content-Type: application/json
 
 {"data":{
-  "user_id":"3",
   "product":"3",
-  "Quantity":"2"
+  "quantity":"2"
 }}
 ###
 //http://localhost:1337/api/posts?filters[product][$eq]=7

@@ -14,8 +14,8 @@ export default function ProductCard({
         <a>
           <OptImage
             src={url}
-            width={320}
-            height={240}
+            width={640}
+            height={480}
             imageProps={imageProps}
           />
           <header className="p-2 flex justify-between items-baseline">

@@ -9,7 +9,7 @@ export default function NavBar() {
   const user = useUser();
   const { signOut } = useSignOut();
 
-  const { setCartOpen } = useSetCartOpen();
+  const { toggleCartOpen } = useSetCartOpen();
   const handleSignOut = async () => signOut();
   return (
     <nav className="py-3 px-2 shadow-sm ">
@@ -23,7 +23,7 @@ export default function NavBar() {
         {user ? (
           <>
             <li>
-              <button onClick={() => setCartOpen(true)}>Cart Items</button>
+              <button onClick={() => toggleCartOpen()}>Cart Items</button>
             </li>
             <li className="mr-3">{user.name}</li>
             <li>

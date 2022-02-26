@@ -35,7 +35,7 @@ export default function Signin() {
         </Label>
         {error && <p className="text-red-500">Invalid credential!!!</p>}
 
-        <Button type="submit" disabled={!loading}>
+        <Button type="submit" disabled={loading}>
           Submit
         </Button>
       </form>
