@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { id } }) {
   try {
     const product = await getProductDetails(id);
-    const optProduct = await addImageOptimization([product], 1);
+    const optProduct = await addImageOptimization([product], 0);
     // console.log("optProduct", optProduct);
 
     return {

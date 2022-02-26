@@ -6,7 +6,7 @@ import { getProducts } from "../lib/product";
 export async function getStaticProps() {
   const LCP_AMOUNT = 6;
   const products = await getProducts();
-  const optProducts = await addImageOptimization(products, LCP_AMOUNT);
+  const optProducts = await addImageOptimization(products, 0);
 
   return {
     props: {
