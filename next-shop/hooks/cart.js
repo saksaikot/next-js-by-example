@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchJson } from "../lib/api.js";
 import { CART_ITEMS_KEY } from "./queryKeys.js";
 const FIVE_MINUTES = 60 * 5 * 1000;
+const INITIAL_CART = { cartItems: [], selected: {}, total: 0, error: false };
 export function useCartItems() {
   return useQuery(
     CART_ITEMS_KEY,
@@ -16,15 +17,16 @@ export function useCartItems() {
           selected[item.product_id] = true;
         });
         // console.log("useCartItems", response);
-        return { cartItems: response, selected, total };
+        return { ...INITIAL_CART, cartItems: response, selected, total };
       } catch (error) {
-        return { cartItems: [], selected: {}, total: 0 };
+        return { ...INITIAL_CART, error: true };
       }
     },
     {
       staleTime: FIVE_MINUTES,
       cacheTime: Infinity,
-      initialData: { cartItems: [], selected: {} },
+      initialData: { ...INITIAL_CART },
+      initialDataUpdatedAt: 0,
     }
   ).data;
 }
@@ -90,5 +92,7 @@ export function useHandleCartItem() {
     decrease: (product, quantity) => handleQuantity(product, quantity - 1),
     loading: mutation.isLoading,
     isSelected: (product_id) => selected[product_id],
+    initItem: () =>
+      queryClient.setQueryData(CART_ITEMS_KEY, { ...INITIAL_CART }),
   };
 }

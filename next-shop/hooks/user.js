@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchJson } from "../lib/api";
+import { useHandleCartItem } from "./cart";
 const FIVE_MINUTES = 60 * 5 * 100;
-import { USER_KEY } from "./queryKeys";
+import { CART_ITEMS_KEY, USER_KEY } from "./queryKeys";
 
 export function useSignIn() {
   const queryClient = useQueryClient();
@@ -21,6 +22,8 @@ export function useSignIn() {
       try {
         const user = await signinMutation.mutateAsync({ email, password });
         queryClient.setQueryData(USER_KEY, user);
+        queryClient.invalidateQueries(CART_ITEMS_KEY);
+
         return user;
       } catch (error) {
         return undefined;
@@ -31,12 +34,14 @@ export function useSignIn() {
 
 export function useSignOut() {
   const queryClient = useQueryClient();
+  const { initItem } = useHandleCartItem();
   const mutation = useMutation(() => fetchJson("/api/logout"));
   return {
     signOut: async () => {
       try {
         await mutation.mutateAsync();
         queryClient.setQueryData(USER_KEY, undefined);
+        initItem();
       } catch (error) {}
     },
   };
